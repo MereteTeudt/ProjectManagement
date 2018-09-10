@@ -23,7 +23,10 @@
             <TabItem Header="Ansatte" Padding="10">
                 <UserControl x:Name="userControlEmployees" Loaded="userControlEmployees_Loaded"></UserControl>
             </TabItem>
-            <TabItem Header="Teams" Padding="10"></TabItem>
+            <TabItem Header="Hold" Padding="10">
+                <UserControl x:Name="userControlTeams"
+                             Loaded="userControlTeams_Loaded"></UserControl>
+            </TabItem>
             <TabItem Header="Projekter" Padding="10"></TabItem>
         </TabControl>
     </DockPanel>

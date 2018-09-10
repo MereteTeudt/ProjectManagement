@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAPI.Tests", "FluentAP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAPI.GUI", "FluentAPI.GUI\FluentAPI.GUI.csproj", "{61C7AA47-76EE-45ED-9D46-B7D5948403BB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Partials", "Partials", "{6B3C3EEB-1D07-4804-BD1D-B3C23E7ED7A2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
