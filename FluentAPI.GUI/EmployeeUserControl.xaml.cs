@@ -34,16 +34,15 @@ namespace FluentAPI.GUI
         private void DataGridEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedEmployee = dataGridEmployees.SelectedItem as Employee;
-            textBoxEmployeeName.Text = selectedEmployee.FirstName + selectedEmployee.LastName;
+            textBoxEmployeeFirstName.Text = selectedEmployee.FirstName;
+            textBoxEmployeeLastName.Text = selectedEmployee.LastName;
         }
 
         private void Button_Click_Save_Employee(object sender, RoutedEventArgs e)
         {
             Employee employee = new Employee();
-            string name = textBoxEmployeeName.Text;
-            string[] split = name.Split(' ');
-            employee.FirstName = split[0];
-            employee.LastName = split[1];
+            employee.FirstName = textBoxEmployeeFirstName.Text;
+            employee.LastName = textBoxEmployeeLastName.Text;
             model.Employees.Add(employee);
             model.SaveChanges();
         }

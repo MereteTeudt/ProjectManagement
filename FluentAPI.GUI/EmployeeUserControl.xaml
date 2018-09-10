@@ -21,8 +21,10 @@
                           x:Name="dataGridEmployees"
                           SelectionChanged="DataGridEmployees_SelectionChanged">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Navn"
-                                            Binding="{Binding Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Fornavn"
+                                            Binding="{Binding FirstName}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Efternavn"
+                                            Binding="{Binding LastName}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Mail"
                                             Binding="{Binding ContactInfo.Email}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Telefon"
@@ -47,6 +49,7 @@
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -54,28 +57,62 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Navn"
+                        <Label Content="Fornavn"
                                Grid.Column="0"
                                Grid.Row="0"
                                HorizontalAlignment="Right">
                         </Label>
                         <TextBox Grid.Column="1"
                                  Grid.Row="0"
-                                 x:Name="textBoxEmployeeName">
+                                 x:Name="textBoxEmployeeFirstName">
                         </TextBox>
-                        <Label Content="Ansættelses dato"
+                        <Label Content="Efternavn"
+                               Grid.Column="2"
+                               Grid.Row="0"
+                               HorizontalAlignment="Right">
+                        </Label>
+                        <TextBox Grid.Column="3"
+                                 Grid.Row="0"
+                                 x:Name="textBoxEmployeeLastName">
+                        </TextBox>
+                        <Label Content="Fødselsdato"
                                Grid.Column="0"
                                Grid.Row="1"
                                HorizontalAlignment="Right">
                         </Label>
                         <DatePicker Grid.Column="1"
                                     Grid.Row="1" />
+                        <Label Content="CPR"
+                               Grid.Column="2"
+                               Grid.Row="1"
+                               HorizontalAlignment="Right">
+                        </Label>
+                        <TextBox Grid.Column="3"
+                                 Grid.Row="1"
+                                 x:Name="textBoxEmployeeCPR">
+                        </TextBox>
+                        <Label Content="Ansættelses dato"
+                               Grid.Column="0"
+                               Grid.Row="2"
+                               HorizontalAlignment="Right">
+                        </Label>
+                        <DatePicker Grid.Column="1"
+                                    Grid.Row="2" />
+                        <Label Content="Løn"
+                               Grid.Column="2"
+                               Grid.Row="2"
+                               HorizontalAlignment="Right">
+                        </Label>
+                        <TextBox Grid.Column="3"
+                                 Grid.Row="2"
+                                 x:Name="textBoxEmployeeSalary">
+                        </TextBox>
                         <Button Content="Opdater"
+                                Grid.Column="1"
+                                Grid.Row="4"/>
+                        <Button Content="Gem"
                                 Grid.Column="2"
-                                Grid.Row="3"/>
-                        <Button Content="Save"
-                                Grid.Column="3"
-                                Grid.Row="3"
+                                Grid.Row="4"
                                 Click="Button_Click_Save_Employee" />
                     </Grid>
                 </Grid>

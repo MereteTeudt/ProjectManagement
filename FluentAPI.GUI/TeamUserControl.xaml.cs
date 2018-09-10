@@ -31,7 +31,14 @@ namespace FluentAPI.GUI
             InitializeComponent();
             model = new Model();
             UpdateTeam();
+            dataGridMembers.ItemsSource = model.Employees.ToList();
 
+        }
+
+        private void DataGridEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedEmployee = dataGridMembers.SelectedItem as Employee;
+            textBoxMember.Text = selectedEmployee.FirstName + selectedEmployee.LastName;
         }
 
         private void UpdateTeam()

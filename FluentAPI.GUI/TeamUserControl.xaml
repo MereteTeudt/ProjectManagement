@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <GroupBox Header="Hold Administration">
-        <Grid>
+        <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -27,6 +27,52 @@
                       Grid.Column="1"
                       DisplayMemberPath="{Binding Name}">
             </ComboBox>
+            <Label Content="Medlem:"
+                   Grid.Column="0"
+                   Grid.Row="2">
+            </Label>
+            <TextBox x:Name="textBoxMember"
+                     Grid.Column="1"
+                     Grid.Row="2">
+            </TextBox>
+            <Button Content="Tilføj"
+                    Grid.Column="1"
+                    Grid.Row="3">
+            </Button>
+            <Button Content="Fjern"
+                    Grid.Column="0"
+                    Grid.Row="3">
+            </Button>
+            <Label Content="Hold Medlemmer:"
+                   Grid.Column="3"
+                   Grid.Row="0">
+            </Label>
+            <Label Content="Udgifter:"
+                   Grid.Column="3"
+                   Grid.Row="4">
+            </Label>
+            <TextBox x:Name="textBoxExpenses" 
+                     Grid.Column="4"
+                     Grid.Row="4">
+            </TextBox>
+            <DataGrid x:Name="dataGridMembers"
+                      AutoGenerateColumns="False"
+                      Grid.Column="3"
+                      Grid.ColumnSpan="2"
+                      Grid.Row="1"
+                      Grid.RowSpan="3"
+                      SelectionChanged="DataGridEmployees_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Fornavn"
+                                        Binding="{Binding FirstName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Efternavn"
+                                        Binding="{Binding LastName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Mail"
+                                        Binding="{Binding ContactInfo.Email}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Telefon"
+                                        Binding="{Binding ContactInfo.Phone}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </GroupBox>
 </UserControl>
