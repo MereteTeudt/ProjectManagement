@@ -14,6 +14,8 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -27,40 +29,48 @@
                       Grid.Column="1"
                       DisplayMemberPath="{Binding Name}">
             </ComboBox>
-            <Label Content="Medlem:"
+            <Label Content="Hold Beskrivelse:"
+                   Grid.Column="0"
+                   Grid.Row="1">
+            </Label>
+            <TextBox x:Name="textBoxTeamInfo"
+                     Grid.Column="1"
+                     Grid.Row="1">
+            </TextBox>
+            <Label Content="Udgifter:"
+                   Grid.Column="0"
+                   Grid.Row="5">
+            </Label>
+            <TextBox x:Name="textBoxExpenses"
+                     Grid.Column="1"
+                     Grid.Row="5">
+            </TextBox>
+            <Label Content="Start:"
                    Grid.Column="0"
                    Grid.Row="2">
             </Label>
-            <TextBox x:Name="textBoxMember"
+            <TextBox x:Name="textBoxStartDate"
                      Grid.Column="1"
                      Grid.Row="2">
             </TextBox>
-            <Button Content="Tilføj"
-                    Grid.Column="1"
-                    Grid.Row="3">
-            </Button>
-            <Button Content="Fjern"
-                    Grid.Column="0"
-                    Grid.Row="3">
-            </Button>
+            <Label Content="Slut:"
+                   Grid.Column="0"
+                   Grid.Row="3">
+            </Label>
+            <TextBox x:Name="textBoxEndDate"
+                     Grid.Column="1"
+                     Grid.Row="3">
+            </TextBox>
             <Label Content="Hold Medlemmer:"
                    Grid.Column="3"
                    Grid.Row="0">
             </Label>
-            <Label Content="Udgifter:"
-                   Grid.Column="3"
-                   Grid.Row="4">
-            </Label>
-            <TextBox x:Name="textBoxExpenses" 
-                     Grid.Column="4"
-                     Grid.Row="4">
-            </TextBox>
             <DataGrid x:Name="dataGridMembers"
                       AutoGenerateColumns="False"
                       Grid.Column="3"
                       Grid.ColumnSpan="2"
                       Grid.Row="1"
-                      Grid.RowSpan="3"
+                      Grid.RowSpan="4"
                       SelectionChanged="DataGridEmployees_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Fornavn"
@@ -73,6 +83,22 @@
                                         Binding="{Binding ContactInfo.Phone}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <Label Content="Medlem:"
+                   Grid.Column="3"
+                   Grid.Row="5">
+            </Label>
+            <TextBox x:Name="textBoxMember"
+                     Grid.Column="4"
+                     Grid.Row="5">
+            </TextBox>
+            <Button Content="Tilføj"
+                    Grid.Column="3"
+                    Grid.Row="6">
+            </Button>
+            <Button Content="Fjern"
+                    Grid.Column="4"
+                    Grid.Row="6">
+            </Button>
         </Grid>
     </GroupBox>
 </UserControl>
