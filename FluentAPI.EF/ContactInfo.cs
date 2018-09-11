@@ -12,11 +12,9 @@ namespace FluentAPI.EF
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string Email { get; set; }
 
-        [Required]
         [StringLength(25)]
         public string Phone { get; set; }
 

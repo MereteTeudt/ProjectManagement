@@ -67,7 +67,10 @@ namespace FluentAPI.GUI
         private void ButtonSaveEmployee_Click(object sender, RoutedEventArgs e)
         {
             Employee employee = new Employee();
-            employee.FirstName = textBoxEmployeeFirstName.Text;
+            if(!string.IsNullOrWhiteSpace(textBoxEmployeeFirstName.Text))
+            {
+                employee.FirstName = textBoxEmployeeFirstName.Text;
+            }
             employee.LastName = textBoxEmployeeLastName.Text;
             employee.BirthDate = datePickerBirthDate.SelectedDate.Value;
             employee.CPR = int.Parse(textBoxEmployeeCPR.Text);
@@ -95,9 +98,7 @@ namespace FluentAPI.GUI
             {
                 ContactInfo contactInfo = new ContactInfo();
                 selectedEmployee.ContactInfo = contactInfo;
-                model.ContactInfos.Add(contactInfo);
             }
-
 
             selectedEmployee.ContactInfo.Email = textBoxEmail.Text;
             selectedEmployee.ContactInfo.Phone = textBoxPhone.Text;

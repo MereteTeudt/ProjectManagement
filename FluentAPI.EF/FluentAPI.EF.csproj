@@ -52,10 +52,6 @@
     <Compile Include="ContactInfo.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Model.cs" />
-    <Compile Include="Partials\ContactInfo.cs" />
-    <Compile Include="Partials\Employee.cs" />
-    <Compile Include="Partials\Project.cs" />
-    <Compile Include="Partials\Team.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Team.cs" />
