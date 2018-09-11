@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
-    <Grid>
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"></ColumnDefinition>
             <ColumnDefinition Width="5*"></ColumnDefinition>
@@ -37,14 +37,13 @@
                   Header="Detaljer"
                   Margin="10">
             <Grid x:Name="gridEmployee">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="20"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
                 <Grid DataContext="selectedEmployee">
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -77,101 +76,66 @@
                         </TextBox>
                         <Label Content="Fødselsdato"
                                Grid.Column="0"
-                               Grid.Row="1"
-                               HorizontalAlignment="Right">
-                        </Label>
-                        <DatePicker Grid.Column="1"
-                                    Grid.Row="1" />
-                        <Label Content="CPR"
-                               Grid.Column="2"
-                               Grid.Row="1"
-                               HorizontalAlignment="Right">
-                        </Label>
-                        <TextBox Grid.Column="3"
-                                 Grid.Row="1"
-                                 x:Name="textBoxEmployeeCPR">
-                        </TextBox>
-                        <Label Content="Ansættelses dato"
-                               Grid.Column="0"
                                Grid.Row="2"
                                HorizontalAlignment="Right">
                         </Label>
-                        <DatePicker Grid.Column="1"
+                        <DatePicker x:Name="datePickerBirthDate"
+                                    Grid.Column="1"
                                     Grid.Row="2" />
-                        <Label Content="Løn"
+                        <Label Content="CPR"
                                Grid.Column="2"
                                Grid.Row="2"
                                HorizontalAlignment="Right">
                         </Label>
                         <TextBox Grid.Column="3"
                                  Grid.Row="2"
+                                 x:Name="textBoxEmployeeCPR">
+                        </TextBox>
+                        <Label Content="Ansættelses dato"
+                               Grid.Column="0"
+                               Grid.Row="4"
+                               HorizontalAlignment="Right">
+                        </Label>
+                        <DatePicker x:Name="datePickerHiringDate"
+                                    Grid.Column="1"
+                                    Grid.Row="4" />
+                        <Label Content="Løn"
+                               Grid.Column="2"
+                               Grid.Row="4"
+                               HorizontalAlignment="Right">
+                        </Label>
+                        <TextBox Grid.Column="3"
+                                 Grid.Row="4"
                                  x:Name="textBoxEmployeeSalary">
                         </TextBox>
-                        <Button Content="Opdater"
-                                Grid.Column="1"
-                                Grid.Row="4"/>
-                        <Button Content="Gem"
-                                Grid.Column="2"
-                                Grid.Row="4"
-                                Click="Button_Click_Save_Employee" />
-                    </Grid>
-                </Grid>
-                <Line Grid.Row="1"
-                      Stroke="BlanchedAlmond"
-                      StrokeThickness="5"
-                      X1="0"
-                      Y1="10"
-                      X2="1000"
-                      Y2="10"></Line>
-                <Grid Grid.Row="2">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                        <Line></Line>
                         <Label Content="Email"
                                Grid.Column="0"
-                               Grid.Row="0"
+                               Grid.Row="6"
                                HorizontalAlignment="Right">
                         </Label>
                         <TextBox Grid.Column="1"
-                                 Grid.Row="0"
+                                 Grid.Row="6"
                                  x:Name="textBoxEmail"
-                                 Grid.ColumnSpan="1"
-                                 Grid.RowSpan="1"
                                  Width="117">
                         </TextBox>
                         <Label Content="Phone"
                                Grid.Column="2"
-                               Grid.Row="0"
+                               Grid.Row="6"
                                HorizontalAlignment="Right">
                         </Label>
                         <TextBox Grid.Column="3"
-                                 Grid.Row="0"
+                                 Grid.Row="6"
                                  x:Name="textBoxPhone"
-                                 Grid.ColumnSpan="1"
-                                 Grid.RowSpan="1"
                                  Width="117">
                         </TextBox>
-                        <Button Content="Opdater" 
-                                Grid.Column="2"
-                                Grid.Row="3"/>
+                        <Button Content="Opdater"
+                                Grid.Column="1"
+                                Grid.Row="8" />
                         <Button Content="Gem"
-                                Grid.Column="3"
-                                Grid.Row="3"
-                                Grid.ColumnSpan="1"
-                                HorizontalAlignment="Right"
-                                Grid.RowSpan="1"
-                                Width="118" 
-                                Click="Button_Click_Save_Contact_Info"/>
+                                Grid.Column="2"
+                                Grid.Row="8"
+                                Click="Button_Click_Save_Employee" />
                     </Grid>
                 </Grid>
             </Grid>

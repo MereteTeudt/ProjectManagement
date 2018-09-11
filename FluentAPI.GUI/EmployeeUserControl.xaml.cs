@@ -27,15 +27,22 @@ namespace FluentAPI.GUI
         {
             InitializeComponent();
             model = new Model();
-            dataGridEmployees.ItemsSource = model.Employees.ToList();
+            UpdateDataGrid();
             this.gridEmployee.DataContext = selectedEmployee;
         }
 
         private void DataGridEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedEmployee = dataGridEmployees.SelectedItem as Employee;
-            textBoxEmployeeFirstName.Text = selectedEmployee.FirstName;
-            textBoxEmployeeLastName.Text = selectedEmployee.LastName;
+            textBoxEmployeeFirstName.Text = selectedEmployee?.FirstName;
+            textBoxEmployeeLastName.Text = selectedEmployee?.LastName;
+            datePickerBirthDate.SelectedDate = selectedEmployee?.BirthDate;
+            textBoxEmployeeCPR.Text = "" + selectedEmployee?.CPR;
+            datePickerHiringDate.SelectedDate = selectedEmployee?.HiringDate;
+            textBoxEmployeeSalary.Text = "" + selectedEmployee?.Pay;
+
+            textBoxEmail.Text = selectedEmployee?.ContactInfo?.Email;
+            textBoxPhone.Text = selectedEmployee?.ContactInfo?.Phone;
         }
 
         private void Button_Click_Save_Employee(object sender, RoutedEventArgs e)
@@ -43,13 +50,25 @@ namespace FluentAPI.GUI
             Employee employee = new Employee();
             employee.FirstName = textBoxEmployeeFirstName.Text;
             employee.LastName = textBoxEmployeeLastName.Text;
+            employee.BirthDate = datePickerBirthDate.SelectedDate.Value;
+            employee.CPR = int.Parse(textBoxEmployeeCPR.Text);
+            employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
+            employee.Pay = decimal.Parse(textBoxEmployeeSalary.Text);
             model.Employees.Add(employee);
             model.SaveChanges();
+            UpdateDataGrid();
         }
 
         private void Button_Click_Save_Contact_Info(object sender, RoutedEventArgs e)
         {
+            Employee employee = new Employee();
+            employee.ContactInfo.Email = textBoxEmail.Text;
+            employee.ContactInfo.Phone = textBoxPhone.Text;
+        }
 
+        private void UpdateDataGrid()
+        {
+            dataGridEmployees.ItemsSource = model.Employees.ToList();
         }
     }
 }
