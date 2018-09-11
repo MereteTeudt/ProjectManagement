@@ -34,6 +34,11 @@ namespace FluentAPI.GUI
         private void DataGridEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedEmployee = dataGridEmployees.SelectedItem as Employee;
+            if(selectedEmployee != null)
+            {
+                buttonUpdateEmployee.IsEnabled = true;
+                buttonSaveEmployee.IsEnabled = false;
+            }
             textBoxEmployeeFirstName.Text = selectedEmployee?.FirstName;
             textBoxEmployeeLastName.Text = selectedEmployee?.LastName;
             datePickerBirthDate.SelectedDate = selectedEmployee?.BirthDate;
@@ -44,8 +49,22 @@ namespace FluentAPI.GUI
             textBoxEmail.Text = selectedEmployee?.ContactInfo?.Email;
             textBoxPhone.Text = selectedEmployee?.ContactInfo?.Phone;
         }
+        private void DataGrid_Employees_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (dataGridEmployees.SelectedItem != null)
+            {
+                if (e.Key == Key.Escape)
+                {
+                    dataGridEmployees.SelectedItem = selectedEmployee = null;
+                    buttonSaveEmployee.IsEnabled = true;
+                    buttonUpdateEmployee.IsEnabled = false;
+                    textBoxEmployeeFirstName.Text = String.Empty;
+                    textBoxEmployeeLastName.Focus();
+                }
+            }
+        }
 
-        private void Button_Click_Save_Employee(object sender, RoutedEventArgs e)
+        private void ButtonSaveEmployee_Click(object sender, RoutedEventArgs e)
         {
             Employee employee = new Employee();
             employee.FirstName = textBoxEmployeeFirstName.Text;
@@ -54,21 +73,35 @@ namespace FluentAPI.GUI
             employee.CPR = int.Parse(textBoxEmployeeCPR.Text);
             employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
             employee.Pay = decimal.Parse(textBoxEmployeeSalary.Text);
+
+            employee.ContactInfo.Email = textBoxEmail.Text;
+            employee.ContactInfo.Phone = textBoxPhone.Text;
+
             model.Employees.Add(employee);
             model.SaveChanges();
             UpdateDataGrid();
         }
 
-        private void Button_Click_Save_Contact_Info(object sender, RoutedEventArgs e)
+        private void ButtonUpdateEmployee_Click(object sender, RoutedEventArgs e)
         {
-            Employee employee = new Employee();
-            employee.ContactInfo.Email = textBoxEmail.Text;
-            employee.ContactInfo.Phone = textBoxPhone.Text;
+            selectedEmployee.FirstName = textBoxEmployeeFirstName.Text;
+            selectedEmployee.LastName = textBoxEmployeeLastName.Text;
+            selectedEmployee.BirthDate = datePickerBirthDate.SelectedDate.Value;
+            selectedEmployee.CPR = int.Parse(textBoxEmployeeCPR.Text);
+            selectedEmployee.HiringDate = datePickerHiringDate.SelectedDate.Value;
+            selectedEmployee.Pay = decimal.Parse(textBoxEmployeeSalary.Text);
+
+            selectedEmployee.ContactInfo.Email = textBoxEmail.Text;
+            selectedEmployee.ContactInfo.Phone = textBoxPhone.Text;
+
+            model.SaveChanges();
+            UpdateDataGrid();
         }
 
         private void UpdateDataGrid()
         {
             dataGridEmployees.ItemsSource = model.Employees.ToList();
         }
+
     }
 }
