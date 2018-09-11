@@ -91,6 +91,14 @@ namespace FluentAPI.GUI
             selectedEmployee.HiringDate = datePickerHiringDate.SelectedDate.Value;
             selectedEmployee.Pay = decimal.Parse(textBoxEmployeeSalary.Text);
 
+            if(selectedEmployee.ContactInfo == null)
+            {
+                ContactInfo contactInfo = new ContactInfo();
+                selectedEmployee.ContactInfo = contactInfo;
+                model.ContactInfos.Add(contactInfo);
+            }
+
+
             selectedEmployee.ContactInfo.Email = textBoxEmail.Text;
             selectedEmployee.ContactInfo.Phone = textBoxPhone.Text;
 
