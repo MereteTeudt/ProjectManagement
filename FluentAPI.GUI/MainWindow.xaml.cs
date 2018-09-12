@@ -25,6 +25,8 @@ namespace FluentAPI.GUI
             InitializeComponent();
             userControlEmployees.Content = new EmployeeUserControl();
             userControlTeams.Content = new TeamUserControl();
+            userControlProjects.Content = new ProjectUserControl();
+            userControlOverview.Content = new OverviewUserControl();
         }
 
         private void userControlEmployees_Loaded(object sender, RoutedEventArgs e)
@@ -33,6 +35,16 @@ namespace FluentAPI.GUI
         }
 
         private void userControlTeams_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void userControlProjects_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void userControlOverview_Loaded(object sender, RoutedEventArgs e)
         {
 
         }

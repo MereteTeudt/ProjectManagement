@@ -27,7 +27,14 @@
                 <UserControl x:Name="userControlTeams"
                              Loaded="userControlTeams_Loaded"></UserControl>
             </TabItem>
-            <TabItem Header="Projekter" Padding="10"></TabItem>
+            <TabItem Header="Projekter" Padding="10">
+                <UserControl x:Name="userControlProjects"
+                             Loaded="userControlProjects_Loaded"></UserControl>
+            </TabItem>
+            <TabItem Header="Oversigt" Padding="10">
+                <UserControl x:Name="userControlOverview"
+                             Loaded="userControlOverview_Loaded"></UserControl>
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>

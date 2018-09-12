@@ -31,19 +31,12 @@ namespace FluentAPI.GUI
             InitializeComponent();
             model = new Model();
             UpdateTeam();
-            dataGridMembers.ItemsSource = model.Employees.ToList();
-
-        }
-
-        private void DataGridEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            selectedEmployee = dataGridMembers.SelectedItem as Employee;
-            textBoxMember.Text = selectedEmployee.FirstName + selectedEmployee.LastName;
+            dataGridAllEmployees.ItemsSource = model.Employees.ToList();
         }
 
         private void UpdateTeam()
         {
-            comboBoxTeams.ItemsSource = TeamsToString();
+            comboBoxTeams.ItemsSource = model.Teams.ToList();
         }
 
         private List<string> TeamsToString()
@@ -57,6 +50,81 @@ namespace FluentAPI.GUI
             }
 
             return teamString;
+        }
+
+        private void UpdateMembersDataGrid()
+        {
+            selectedTeam = comboBoxTeams.SelectedItem as Team;
+            dataGridMembers.ItemsSource = selectedTeam.Employees.ToList();
+        }
+
+        private void comboBoxTeams_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateTeamData();
+            dataGridMembers.ItemsSource = selectedTeam.Employees.ToList();
+        }
+
+        private decimal CalculateExpenses()
+        {
+            decimal monthlyPayExpense = 0;
+            decimal totalPayExpense = 0;
+
+            int monthsInt = ((selectedTeam.ExpectedEndDate.Year - selectedTeam.StartDate.Year) * 12) + selectedTeam.ExpectedEndDate.Month - selectedTeam.StartDate.Month;
+
+            foreach(Employee emp in selectedTeam.Employees.ToList())
+            {
+                monthlyPayExpense += emp.Pay;
+            }
+
+            totalPayExpense = monthsInt * monthlyPayExpense;
+
+            return totalPayExpense;
+        }
+
+        private void dataGridAllEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            buttonAdd.IsEnabled = true;
+            buttonRemove.IsEnabled = false;
+        }
+
+        private void DataGridMembers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            buttonAdd.IsEnabled = false;
+            buttonRemove.IsEnabled = true;
+        }
+
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (comboBoxTeams.SelectedIndex > -1)
+            {
+                selectedEmployee = dataGridAllEmployees.SelectedItem as Employee;
+                selectedTeam.Employees.Add(selectedEmployee);
+            }
+            model.SaveChanges();
+            UpdateMembersDataGrid();
+            UpdateTeamData();
+        }
+
+        private void buttonRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if (comboBoxTeams.SelectedIndex > -1)
+            {
+                selectedEmployee = dataGridMembers.SelectedItem as Employee;
+                selectedTeam.Employees.Remove(selectedEmployee);
+            }
+            model.SaveChanges();
+            UpdateMembersDataGrid();
+            UpdateTeamData();
+        }
+
+        private void UpdateTeamData()
+        {
+            selectedTeam = comboBoxTeams.SelectedItem as Team;
+            textBoxTeamInfo.Text = selectedTeam?.Description;
+            datePickerStartDate.SelectedDate = selectedTeam?.StartDate;
+            datePickerEndDate.SelectedDate = selectedTeam?.ExpectedEndDate;
+
+            textBoxExpenses.Text = CalculateExpenses().ToString();
         }
     }
 }
