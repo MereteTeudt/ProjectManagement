@@ -22,7 +22,6 @@ namespace FluentAPI.GUI
     public partial class TeamUserControl : UserControl
     {
         protected Model model;
-        private List<Team> teams;
         private Team selectedTeam;
         private Employee selectedEmployee;
 
@@ -39,19 +38,6 @@ namespace FluentAPI.GUI
             comboBoxTeams.ItemsSource = model.Teams.ToList();
         }
 
-        private List<string> TeamsToString()
-        {
-            List<string> teamString = new List<string>();
-
-            teams = model.Teams.ToList();
-            foreach(Team t in teams)
-            {
-                teamString.Add(t.Name);
-            }
-
-            return teamString;
-        }
-
         private void UpdateMembersDataGrid()
         {
             selectedTeam = comboBoxTeams.SelectedItem as Team;
@@ -64,7 +50,7 @@ namespace FluentAPI.GUI
             dataGridMembers.ItemsSource = selectedTeam.Employees.ToList();
         }
 
-        private decimal CalculateExpenses()
+        public static decimal CalculateTeamExpenses(Team selectedTeam)
         {
             decimal monthlyPayExpense = 0;
             decimal totalPayExpense = 0;
@@ -124,7 +110,7 @@ namespace FluentAPI.GUI
             datePickerStartDate.SelectedDate = selectedTeam?.StartDate;
             datePickerEndDate.SelectedDate = selectedTeam?.ExpectedEndDate;
 
-            textBoxExpenses.Text = CalculateExpenses().ToString();
+            textBoxExpenses.Text = CalculateTeamExpenses(selectedTeam).ToString();
         }
     }
 }

@@ -28,7 +28,8 @@
                    Grid.Column="0"></Label>
             <ComboBox x:Name="comboBoxProjects"
                       Grid.Column="1"
-                      DisplayMemberPath="{Binding Name}">
+                      DisplayMemberPath="{Binding Name}"
+                      SelectionChanged="comboBoxProjects_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
@@ -45,35 +46,52 @@
             </TextBox>
             <Label Content="Budgetgrænse:"
                    Grid.Column="3"
-                   Grid.Row="5">
+                   Grid.Row="3">
             </Label>
             <TextBox x:Name="textBoxBudget"
                      Grid.Column="4"
-                     Grid.Row="5">
+                     Grid.Row="3">
+            </TextBox>
+            <Label Content="Udgifter:"
+                   Grid.Column="3"
+                   Grid.Row="4">
+            </Label>
+            <TextBox x:Name="textBoxExpenses"
+                     Grid.Column="4"
+                     Grid.Row="4">
+            </TextBox>
+            <Label Content="Udgifter for alle projekter:"
+                   Grid.Column="3"
+                   Grid.Row="6">
+            </Label>
+            <TextBox x:Name="textBoxExpensesAllProjects"
+                     Grid.Column="4"
+                     Grid.Row="6">
             </TextBox>
             <Label Content="Start:"
                    Grid.Column="3"
-                   Grid.Row="2">
+                   Grid.Row="1">
             </Label>
             <DatePicker x:Name="datePickerStartDate"
                         Grid.Column="4"
-                        Grid.Row="2">
+                        Grid.Row="1">
             </DatePicker>
             <Label Content="Slut:"
                    Grid.Column="3"
-                   Grid.Row="3">
+                   Grid.Row="2">
             </Label>
             <DatePicker x:Name="datePickerEndDate"
                         Grid.Column="4"
-                        Grid.Row="3">
+                        Grid.Row="2">
             </DatePicker>
-            <DataGrid x:Name="dataGridAffiliatedProjects"
+            <DataGrid x:Name="dataGridAffiliatedTeams"
                       CanUserAddRows="false"
                       AutoGenerateColumns="False"
                       Grid.Column="0"
                       Grid.ColumnSpan="2"
                       Grid.Row="1"
-                      Grid.RowSpan="2">
+                      Grid.RowSpan="2"
+                      SelectionChanged="dataGridAffiliatedTeams_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Navn"
                                         Binding="{Binding Name}"></DataGridTextColumn>
@@ -87,7 +105,7 @@
                                         Binding="{Binding EndDate}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Label Content="Tilknyttede hold:"
+            <Label Content="Alle hold:"
                    Grid.Row="3"></Label>
             <DataGrid x:Name="dataGridAllTeams"
                       CanUserAddRows="false"
@@ -95,7 +113,8 @@
                       Grid.Column="0"
                       Grid.ColumnSpan="2"
                       Grid.Row="4"
-                      Grid.RowSpan="2">
+                      Grid.RowSpan="2"
+                      SelectionChanged="dataGridAllTeams_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Navn"
                                         Binding="{Binding Name}"></DataGridTextColumn>
