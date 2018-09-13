@@ -5,6 +5,7 @@ namespace FluentAPI.EF
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Text.RegularExpressions;
 
     public partial class Project
     {
@@ -37,6 +38,11 @@ namespace FluentAPI.EF
                     throw new ArgumentOutOfRangeException(nameof(value),
                         value, $"{nameof(Name)} feltet må ikke være tomt");
                 }
+                if (Regex.IsMatch(value, @"^[\p{L}]+$"))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value),
+                        value, $"{nameof(Name)} navne må kun indeholde bogstaver");
+                }
                 name = value;
             }
         }
@@ -68,10 +74,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (value < DateTime.Today)
+                if (value > DateTime.Today)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(StartDate)} feltet må ikke være tomt");
+                        value, $"{nameof(StartDate)} projektet kan ikke startes i fremtiden");
                 }
                 startDate = value;
             }

@@ -5,6 +5,7 @@ namespace FluentAPI.EF
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("ContactInfos")]
     public partial class ContactInfo
@@ -42,10 +43,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (!value.All(Char.IsNumber))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(Phone)} feltet må ikke være tomt");
+                        value, $"{nameof(Phone)} telefon numre kan kun bestå af tal");
                 }
                 phone = value;
             }

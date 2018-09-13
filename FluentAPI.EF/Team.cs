@@ -67,10 +67,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (value < DateTime.Today)
+                if (value > DateTime.Today)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(StartDate)} feltet må ikke være tomt");
+                        value, $"{nameof(StartDate)} holdet kan ikke startes i fremtiden");
                 }
                 startDate = value;
             }
