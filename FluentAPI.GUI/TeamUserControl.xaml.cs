@@ -29,11 +29,11 @@ namespace FluentAPI.GUI
         {
             InitializeComponent();
             model = new Model();
-            UpdateTeam();
+            UpdateTeamsComboBox();
             dataGridAllEmployees.ItemsSource = model.Employees.ToList();
         }
 
-        private void UpdateTeam()
+        private void UpdateTeamsComboBox()
         {
             comboBoxTeams.ItemsSource = model.Teams.ToList();
         }
@@ -111,6 +111,65 @@ namespace FluentAPI.GUI
             datePickerEndDate.SelectedDate = selectedTeam?.ExpectedEndDate;
 
             textBoxExpenses.Text = CalculateTeamExpenses(selectedTeam).ToString();
+        }
+
+        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            selectedTeam = comboBoxTeams.SelectedItem as Team;
+
+            UpdateOrSaveTeam(selectedTeam);
+            model.SaveChanges();
+            UpdateTeamsComboBox();
+
+        }
+
+        private void buttonSave_Click(object sender, RoutedEventArgs e)
+        {
+            Team team = new Team();
+
+            UpdateOrSaveTeam(team);
+            model.Teams.Add(team);
+            model.SaveChanges();
+            UpdateTeamsComboBox();
+        }
+
+        private void UpdateOrSaveTeam(Team team)
+        {
+            try
+            {
+                team.Name = textBoxTeamName.Text;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                team.Description = textBoxTeamInfo.Text;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                team.StartDate = datePickerStartDate.SelectedDate.Value;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                team.ExpectedEndDate = datePickerEndDate.SelectedDate.Value;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
         }
     }
 }

@@ -16,8 +16,18 @@
                   Header="Oversigt"
                   Margin="10">
             <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Margin="10">Marker en ansat for at opdatere data <LineBreak /> Tryk escape for at afvælge en ansat og gemme en ny</TextBlock>
                 <DataGrid AutoGenerateColumns="False"
-                          Margin="10"
+                          Grid.Row="1"
+                          Grid.RowSpan="5"
                           x:Name="dataGridEmployees"
                           SelectionChanged="DataGridEmployees_SelectionChanged"
                           KeyDown="DataGrid_Employees_KeyDown">
@@ -110,7 +120,7 @@
                                  x:Name="textBoxEmployeeSalary">
                         </TextBox>
                         <Separator Grid.Row="5"
-                                   Grid.ColumnSpan="4"/>
+                                   Grid.ColumnSpan="4" />
                         <Label Content="Email"
                                Grid.Column="0"
                                Grid.Row="6"
@@ -131,13 +141,13 @@
                                  x:Name="textBoxPhone"
                                  Width="117">
                         </TextBox>
-                        <Button x:Name="buttonUpdateEmployee" 
+                        <Button x:Name="buttonUpdateEmployee"
                                 Content="Opdater"
                                 Grid.Column="1"
                                 Grid.Row="8"
                                 IsEnabled="False"
                                 Click="ButtonUpdateEmployee_Click" />
-                        <Button x:Name="buttonSaveEmployee" 
+                        <Button x:Name="buttonSaveEmployee"
                                 Content="Gem"
                                 Grid.Column="2"
                                 Grid.Row="8"

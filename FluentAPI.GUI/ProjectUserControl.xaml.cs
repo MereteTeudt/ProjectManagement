@@ -29,7 +29,7 @@ namespace FluentAPI.GUI
         {
             InitializeComponent();
             model = new Model();
-            UpdateProject();
+            UpdateProjectsComboBox();
             dataGridAllTeams.ItemsSource = model.Teams.ToList();
         }
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
@@ -57,7 +57,7 @@ namespace FluentAPI.GUI
             UpdateProjectData();
         }
 
-        private void UpdateProject()
+        private void UpdateProjectsComboBox()
         {
             comboBoxProjects.ItemsSource = model.Projects.ToList();
         }
@@ -73,10 +73,6 @@ namespace FluentAPI.GUI
             datePickerStartDate.SelectedDate = selectedProject.StartDate;
             datePickerEndDate.SelectedDate = selectedProject.EndDate;
             textBoxBudget.Text = selectedProject.Budget.ToString();
-
-            textBoxExpenses.Text = CalculateProjectExpenses().ToString();
-
-            textBoxExpensesAllProjects.Text = CalculateAllProjectsExpenses().ToString();
         }
 
         private void comboBoxProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -97,27 +93,62 @@ namespace FluentAPI.GUI
             buttonRemove.IsEnabled = false;
         }
 
-        private decimal CalculateProjectExpenses()
+        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
-            decimal projectExpenses = 0;
+            selectedProject = comboBoxProjects.SelectedItem as Project;
 
-            foreach(Team t in selectedProject.Teams.ToList())
-            {
-                projectExpenses += TeamUserControl.CalculateTeamExpenses(t);
-            }
-
-            return projectExpenses;
+            UpdateOrSaveProject(selectedProject);
+            model.SaveChanges();
+            UpdateProjectsComboBox();
         }
-        private decimal CalculateAllProjectsExpenses()
-        {
-            decimal allProjectsExpenses = 0;
 
-            foreach(Project p in model.Projects.ToList())
+        private void buttonSave_Click(object sender, RoutedEventArgs e)
+        {
+            Project project = new Project();
+
+            UpdateOrSaveProject(project);
+            model.Projects.Add(project);
+            model.SaveChanges();
+            UpdateProjectsComboBox();
+        }
+
+        private void UpdateOrSaveProject(Project project)
+        {
+            try
             {
-                allProjectsExpenses += CalculateProjectExpenses();
+                project.Name = textBoxProjectName.Text;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
             }
 
-            return allProjectsExpenses;
+            try
+            {
+               project.Description = textBoxProjectInfo.Text;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                project.StartDate = datePickerStartDate.SelectedDate.Value;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                project.EndDate = datePickerEndDate.SelectedDate.Value;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
         }
     }
 }

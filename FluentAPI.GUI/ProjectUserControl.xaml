@@ -36,54 +36,6 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Label Content="Projekt Beskrivelse:"
-                   Grid.Column="3"
-                   Grid.Row="0">
-            </Label>
-            <TextBox x:Name="textBoxProjectInfo"
-                     Grid.Column="4"
-                     Grid.Row="0">
-            </TextBox>
-            <Label Content="Budgetgrænse:"
-                   Grid.Column="3"
-                   Grid.Row="3">
-            </Label>
-            <TextBox x:Name="textBoxBudget"
-                     Grid.Column="4"
-                     Grid.Row="3">
-            </TextBox>
-            <Label Content="Udgifter:"
-                   Grid.Column="3"
-                   Grid.Row="4">
-            </Label>
-            <TextBox x:Name="textBoxExpenses"
-                     Grid.Column="4"
-                     Grid.Row="4">
-            </TextBox>
-            <Label Content="Udgifter for alle projekter:"
-                   Grid.Column="3"
-                   Grid.Row="6">
-            </Label>
-            <TextBox x:Name="textBoxExpensesAllProjects"
-                     Grid.Column="4"
-                     Grid.Row="6">
-            </TextBox>
-            <Label Content="Start:"
-                   Grid.Column="3"
-                   Grid.Row="1">
-            </Label>
-            <DatePicker x:Name="datePickerStartDate"
-                        Grid.Column="4"
-                        Grid.Row="1">
-            </DatePicker>
-            <Label Content="Slut:"
-                   Grid.Column="3"
-                   Grid.Row="2">
-            </Label>
-            <DatePicker x:Name="datePickerEndDate"
-                        Grid.Column="4"
-                        Grid.Row="2">
-            </DatePicker>
             <DataGrid x:Name="dataGridAffiliatedTeams"
                       CanUserAddRows="false"
                       AutoGenerateColumns="False"
@@ -141,6 +93,60 @@
                     Grid.Column="1"
                     Grid.Row="6"
                     Click="buttonRemove_Click">
+            </Button>
+            <Label Content="Projekt Navn:"
+                   Grid.Column="3"
+                   Grid.Row="0">
+            </Label>
+            <TextBox x:Name="textBoxProjectName"
+                     Grid.Column="4"
+                     Grid.Row="0">
+            </TextBox>
+            <Label Content="Projekt Beskrivelse:"
+                   Grid.Column="3"
+                   Grid.Row="1">
+            </Label>
+            <TextBox x:Name="textBoxProjectInfo"
+                     Grid.Column="4"
+                     Grid.Row="1">
+            </TextBox>
+            <Label Content="Start:"
+                   Grid.Column="3"
+                   Grid.Row="2">
+            </Label>
+            <DatePicker x:Name="datePickerStartDate"
+                        Grid.Column="4"
+                        Grid.Row="2">
+            </DatePicker>
+            <Label Content="Slut:"
+                   Grid.Column="3"
+                   Grid.Row="3">
+            </Label>
+            <DatePicker x:Name="datePickerEndDate"
+                        Grid.Column="4"
+                        Grid.Row="3">
+            </DatePicker>
+            <Label Content="Budgetgrænse:"
+                   Grid.Column="3"
+                   Grid.Row="4">
+            </Label>
+            <TextBox x:Name="textBoxBudget"
+                     Grid.Column="4"
+                     Grid.Row="4">
+            </TextBox>
+            <Button x:Name="buttonUpdate"
+                    IsEnabled="False"
+                    Content="Opdater"
+                    Grid.Column="3"
+                    Grid.Row="6"
+                    Click="buttonUpdate_Click">
+            </Button>
+            <Button x:Name="buttonSave"
+                    IsEnabled="false"
+                    Content="Gem"
+                    Grid.Column="4"
+                    Grid.Row="6"
+                    Click="buttonSave_Click">
             </Button>
         </Grid>
     </GroupBox>

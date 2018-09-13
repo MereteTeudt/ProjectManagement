@@ -29,25 +29,31 @@ namespace FluentAPI.GUI
             model = new Model();
             UpdateDataGrid();
             this.gridEmployee.DataContext = selectedEmployee;
+            //SetDataToDefault();
         }
 
         private void DataGridEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedEmployee = dataGridEmployees.SelectedItem as Employee;
-            if(selectedEmployee != null)
+            if (selectedEmployee != null)
             {
                 buttonUpdateEmployee.IsEnabled = true;
                 buttonSaveEmployee.IsEnabled = false;
-            }
-            textBoxEmployeeFirstName.Text = selectedEmployee?.FirstName;
-            textBoxEmployeeLastName.Text = selectedEmployee?.LastName;
-            datePickerBirthDate.SelectedDate = selectedEmployee?.BirthDate;
-            textBoxEmployeeCPR.Text = "" + selectedEmployee?.CPR;
-            datePickerHiringDate.SelectedDate = selectedEmployee?.HiringDate;
-            textBoxEmployeeSalary.Text = "" + selectedEmployee?.Pay;
 
-            textBoxEmail.Text = selectedEmployee?.ContactInfo?.Email;
-            textBoxPhone.Text = selectedEmployee?.ContactInfo?.Phone;
+                textBoxEmployeeFirstName.Text = selectedEmployee?.FirstName;
+                textBoxEmployeeLastName.Text = selectedEmployee?.LastName;
+                datePickerBirthDate.SelectedDate = selectedEmployee?.BirthDate;
+                textBoxEmployeeCPR.Text = "" + selectedEmployee?.CPR;
+                datePickerHiringDate.SelectedDate = selectedEmployee?.HiringDate;
+                textBoxEmployeeSalary.Text = "" + selectedEmployee?.Pay;
+
+                textBoxEmail.Text = selectedEmployee?.ContactInfo?.Email;
+                textBoxPhone.Text = selectedEmployee?.ContactInfo?.Phone;
+            }
+            else
+            {
+                SetDataToDefault();
+            }
         }
         private void DataGrid_Employees_KeyDown(object sender, KeyEventArgs e)
         {
@@ -58,8 +64,7 @@ namespace FluentAPI.GUI
                     dataGridEmployees.SelectedItem = selectedEmployee = null;
                     buttonSaveEmployee.IsEnabled = true;
                     buttonUpdateEmployee.IsEnabled = false;
-                    textBoxEmployeeFirstName.Text = String.Empty;
-                    textBoxEmployeeLastName.Focus();
+                    textBoxEmployeeFirstName.Focus();
                 }
             }
         }
@@ -67,18 +72,8 @@ namespace FluentAPI.GUI
         private void ButtonSaveEmployee_Click(object sender, RoutedEventArgs e)
         {
             Employee employee = new Employee();
-            if(!string.IsNullOrWhiteSpace(textBoxEmployeeFirstName.Text))
-            {
-                employee.FirstName = textBoxEmployeeFirstName.Text;
-            }
-            employee.LastName = textBoxEmployeeLastName.Text;
-            employee.BirthDate = datePickerBirthDate.SelectedDate.Value;
-            employee.CPR = int.Parse(textBoxEmployeeCPR.Text);
-            employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
-            employee.Pay = decimal.Parse(textBoxEmployeeSalary.Text);
-
-            employee.ContactInfo.Email = textBoxEmail.Text;
-            employee.ContactInfo.Phone = textBoxPhone.Text;
+            employee.ContactInfo = new ContactInfo();
+            UpdateOrSaveEmployee(employee);
 
             model.Employees.Add(employee);
             model.SaveChanges();
@@ -87,22 +82,13 @@ namespace FluentAPI.GUI
 
         private void ButtonUpdateEmployee_Click(object sender, RoutedEventArgs e)
         {
-            selectedEmployee.FirstName = textBoxEmployeeFirstName.Text;
-            selectedEmployee.LastName = textBoxEmployeeLastName.Text;
-            selectedEmployee.BirthDate = datePickerBirthDate.SelectedDate.Value;
-            selectedEmployee.CPR = int.Parse(textBoxEmployeeCPR.Text);
-            selectedEmployee.HiringDate = datePickerHiringDate.SelectedDate.Value;
-            selectedEmployee.Pay = decimal.Parse(textBoxEmployeeSalary.Text);
 
-            if(selectedEmployee.ContactInfo == null)
+            if (selectedEmployee.ContactInfo == null)
             {
                 ContactInfo contactInfo = new ContactInfo();
                 selectedEmployee.ContactInfo = contactInfo;
             }
-
-            selectedEmployee.ContactInfo.Email = textBoxEmail.Text;
-            selectedEmployee.ContactInfo.Phone = textBoxPhone.Text;
-
+            UpdateOrSaveEmployee(selectedEmployee);
             model.SaveChanges();
             UpdateDataGrid();
         }
@@ -112,5 +98,94 @@ namespace FluentAPI.GUI
             dataGridEmployees.ItemsSource = model.Employees.ToList();
         }
 
+        private void SetDataToDefault()
+        {
+
+            textBoxEmployeeFirstName.Text = "";
+            textBoxEmployeeLastName.Text = "";
+            textBoxEmployeeCPR.Text = "00000000";
+            textBoxEmployeeSalary.Text = "0.0";
+            textBoxEmail.Text = "";
+            textBoxPhone.Text = "000000";
+
+            datePickerHiringDate.SelectedDate = DateTime.Today;
+            datePickerBirthDate.SelectedDate = new DateTime(1950, 1, 1);
+        }
+
+        private void UpdateOrSaveEmployee(Employee employee)
+        {
+            try
+            {
+                employee.FirstName = textBoxEmployeeFirstName.Text;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                employee.LastName = textBoxEmployeeLastName.Text;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                employee.BirthDate = datePickerBirthDate.SelectedDate.Value;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                employee.CPR = int.Parse(textBoxEmployeeCPR.Text);
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                employee.Pay = decimal.Parse(textBoxEmployeeSalary.Text);
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+
+            try
+            {
+                employee.ContactInfo.Email = textBoxEmail.Text;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            try
+            {
+                employee.ContactInfo.Phone = textBoxPhone.Text;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+        }
     }
 }
