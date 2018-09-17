@@ -7,7 +7,7 @@ namespace FluentAPI.EF
     using System.Data.Entity.Spatial;
     using System.Text.RegularExpressions;
 
-    public partial class Project
+    public partial class Project : IWorkable
     {
         private string name;
         private string description;
@@ -118,7 +118,11 @@ namespace FluentAPI.EF
                 budget = value;
             }
         }
-
+        public decimal Calculate()
+        {
+            decimal amount = 0;
+            return amount;
+        }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> Teams { get; set; }
     }

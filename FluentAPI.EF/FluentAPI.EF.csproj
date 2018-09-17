@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ContactInfo.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="IWorkable.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Project.cs" />

@@ -6,7 +6,7 @@ namespace FluentAPI.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Team
+    public partial class Team : IWorkable
     {
         private string name;
         private string description;
@@ -94,6 +94,11 @@ namespace FluentAPI.EF
             }
         }
 
+        public decimal Calculate()
+        {
+            decimal amount = 0;
+            return amount;
+        }
         public int? ProjectId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
