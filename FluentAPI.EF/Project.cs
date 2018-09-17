@@ -38,7 +38,7 @@ namespace FluentAPI.EF
                     throw new ArgumentOutOfRangeException(nameof(value),
                         value, $"{nameof(Name)} feltet må ikke være tomt");
                 }
-                if (Regex.IsMatch(value, @"^[\p{L}]+$"))
+                if (Regex.IsMatch(value, @"^[a-zA-Z]+$"))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
                         value, $"{nameof(Name)} navne må kun indeholde bogstaver");

@@ -75,9 +75,17 @@ namespace FluentAPI.GUI
             employee.ContactInfo = new ContactInfo();
             UpdateOrSaveEmployee(employee);
 
-            model.Employees.Add(employee);
-            model.SaveChanges();
-            UpdateDataGrid();
+            try
+            {
+                model.Employees.Add(employee);
+                model.SaveChanges();
+                UpdateDataGrid();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
+
         }
 
         private void ButtonUpdateEmployee_Click(object sender, RoutedEventArgs e)
@@ -89,8 +97,16 @@ namespace FluentAPI.GUI
                 selectedEmployee.ContactInfo = contactInfo;
             }
             UpdateOrSaveEmployee(selectedEmployee);
-            model.SaveChanges();
-            UpdateDataGrid();
+
+            try
+            {
+                model.SaveChanges();
+                UpdateDataGrid();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
         }
 
         private void UpdateDataGrid()
@@ -98,94 +114,83 @@ namespace FluentAPI.GUI
             dataGridEmployees.ItemsSource = model.Employees.ToList();
         }
 
-        private void SetDataToDefault()
-        {
+        //private void SetDataToDefault()
+        //{
 
-            textBoxEmployeeFirstName.Text = "";
-            textBoxEmployeeLastName.Text = "";
-            textBoxEmployeeCPR.Text = "00000000";
-            textBoxEmployeeSalary.Text = "0.0";
-            textBoxEmail.Text = "";
-            textBoxPhone.Text = "000000";
+        //    textBoxEmployeeFirstName.Text = "";
+        //    textBoxEmployeeLastName.Text = "";
+        //    textBoxEmployeeCPR.Text = "00000000";
+        //    textBoxEmployeeSalary.Text = "0.0";
+        //    textBoxEmail.Text = "";
+        //    textBoxPhone.Text = "000000";
 
-            datePickerHiringDate.SelectedDate = DateTime.Today;
-            datePickerBirthDate.SelectedDate = new DateTime(1950, 1, 1);
-        }
+        //    datePickerHiringDate.SelectedDate = DateTime.Today;
+        //    datePickerBirthDate.SelectedDate = new DateTime(1950, 1, 1);
+        //}
 
         private void UpdateOrSaveEmployee(Employee employee)
         {
-            try
+            int parsedCPR;
+            decimal parsedPay;
+
+            if (!Validator.IsValidName(textBoxEmployeeFirstName.Text))
             {
-                employee.FirstName = textBoxEmployeeFirstName.Text;
+                MessageBox.Show("Ugyldigt navn. Et navn kan kun bestå af bogstaver og feltet må ikke være blankt.");
             }
-            catch (ArgumentOutOfRangeException error)
+            else if (!Validator.IsValidName(textBoxEmployeeLastName.Text))
             {
-                MessageBox.Show(error.Message);
+                MessageBox.Show("Ugyldigt navn. Et navn kan kun bestå af bogstaver og feltet må ikke være blankt.");
+            }
+            else if (!Validator.IsValidBirthDate(datePickerBirthDate.SelectedDate.Value))
+            {
+                MessageBox.Show("Ugyldig alder. Ansatte kan ikke være over 70 år.");
+            }
+            else if (!Validator.IsValidHiringDate(datePickerHiringDate.SelectedDate.Value, datePickerBirthDate.SelectedDate.Value))
+            {
+                MessageBox.Show("Ugyldig hyringsdato. Hyringsdato skal være senere end den ansattes fødselsdato og firmaets stiftelse.");
+            }
+            else if (!int.TryParse(textBoxEmployeeCPR.Text, out parsedCPR))
+            {
+                MessageBox.Show("Ugyldigt CPR nummer. Et CPR nummer kan kun bestå af tal.");
+            }
+            else if (!Validator.IsValidCPR(parsedCPR))
+            {
+                MessageBox.Show("Ugyldigt CPR nummer. Et CPR nummer skal være præcis 8 cifre langt.");
+            }
+            else if (!decimal.TryParse(textBoxEmployeeSalary.Text, out parsedPay))
+            {
+                MessageBox.Show("Ugyldigt beløb. Beløbet kan kun bestå af tal.");
+            }
+            else if (!Validator.IsValidAmount(parsedPay))
+            {
+                MessageBox.Show("Ugyldigt beløb. Beløbet kan ikke være mindre end nul.");
+            }
+            else
+            {
+                try
+                {
+                    employee.FirstName = textBoxEmployeeFirstName.Text;
+
+                    employee.LastName = textBoxEmployeeLastName.Text;
+
+                    employee.BirthDate = datePickerBirthDate.SelectedDate.Value;
+
+                    employee.CPR = int.Parse(textBoxEmployeeCPR.Text);
+
+                    employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
+
+                    employee.Pay = decimal.Parse(textBoxEmployeeSalary.Text);
+                
+                    employee.ContactInfo.Email = textBoxEmail.Text;
+
+                    employee.ContactInfo.Phone = textBoxPhone.Text;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+                }
             }
 
-            try
-            {
-                employee.LastName = textBoxEmployeeLastName.Text;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
-
-            try
-            {
-                employee.BirthDate = datePickerBirthDate.SelectedDate.Value;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
-
-            try
-            {
-                employee.CPR = int.Parse(textBoxEmployeeCPR.Text);
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
-
-            try
-            {
-                employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
-
-            try
-            {
-                employee.Pay = decimal.Parse(textBoxEmployeeSalary.Text);
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
-
-
-            try
-            {
-                employee.ContactInfo.Email = textBoxEmail.Text;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
-
-            try
-            {
-                employee.ContactInfo.Phone = textBoxPhone.Text;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
         }
     }
 }
