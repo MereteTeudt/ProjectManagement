@@ -14,6 +14,7 @@ namespace FluentAPI.EF
         private DateTime startDate;
         private DateTime endDate;
         private decimal budget;
+        private TimeSpan projectDuration;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Project()
@@ -113,9 +114,21 @@ namespace FluentAPI.EF
                 budget = value;
             }
         }
+
+        public TimeSpan ProjectDuration
+        {
+            get
+            {
+                return EndDate - StartDate;
+            }
+        }
         public decimal Calculate()
         {
             decimal amount = 0;
+            foreach(Team t in Teams)
+            {
+                amount = t.Calculate();
+            }
             return amount;
         }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -40,13 +40,12 @@ namespace FluentAPI.GUI
 
         private decimal CalculateProjectExpenses(Project selectedProject)
         {
-            decimal projectExpenses = 0;
-            foreach (Team t in selectedProject.Teams.ToList())
-            {
-                projectExpenses += TeamUserControl.CalculateTeamExpenses(t);
-            }
+            decimal totalPayExpense = 0;
+            int durationInMonths = 0;
+            durationInMonths = selectedProject.ProjectDuration.Days / 30;
+            totalPayExpense = durationInMonths * selectedProject.Calculate();
 
-            return projectExpenses;
+            return totalPayExpense;
         }
         private decimal CalculateAllProjectsExpenses()
         {

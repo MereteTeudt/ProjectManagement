@@ -213,17 +213,10 @@ namespace FluentAPI.GUI
         }
         public static decimal CalculateTeamExpenses(Team selectedTeam)
         {
-            decimal monthlyPayExpense = 0;
             decimal totalPayExpense = 0;
-
-            int monthsInt = ((selectedTeam.EndDate.Year - selectedTeam.StartDate.Year) * 12) + selectedTeam.EndDate.Month - selectedTeam.StartDate.Month;
-
-            foreach (Employee emp in selectedTeam.Employees.ToList())
-            {
-                monthlyPayExpense += emp.Pay;
-            }
-
-            totalPayExpense = monthsInt * monthlyPayExpense;
+            int durationInMonths = 0;
+            durationInMonths = selectedTeam.TeamDuration.Days / 30;
+            totalPayExpense = durationInMonths * selectedTeam.Calculate();
 
             return totalPayExpense;
         }

@@ -85,7 +85,7 @@
                     <DataGridTextColumn Header="Slut"
                                         Binding="{Binding EndDate}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Budget"
-                                        Binding="{Binding EndDate}"></DataGridTextColumn>
+                                        Binding="{Binding Budget}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="buttonAdd"

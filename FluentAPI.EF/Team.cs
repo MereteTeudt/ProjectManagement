@@ -12,6 +12,7 @@ namespace FluentAPI.EF
         private string description;
         private DateTime startDate;
         private DateTime endDate;
+        private TimeSpan teamDuration;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Team()
@@ -94,9 +95,21 @@ namespace FluentAPI.EF
             }
         }
 
+        public TimeSpan TeamDuration
+        {
+            get
+            {
+                return EndDate - StartDate;
+            }
+        }
+
         public decimal Calculate()
         {
             decimal amount = 0;
+            foreach(Employee e in Employees)
+            {
+                amount += e.Pay;
+            }
             return amount;
         }
         public int? ProjectId { get; set; }
