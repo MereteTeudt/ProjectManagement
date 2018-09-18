@@ -60,37 +60,6 @@ namespace FluentAPI.GUI
 
         }
 
-        public static decimal CalculateTeamExpenses(Team selectedTeam)
-        {
-            decimal monthlyPayExpense = 0;
-            decimal totalPayExpense = 0;
-
-            int monthsInt = ((selectedTeam.EndDate.Year - selectedTeam.StartDate.Year) * 12) + selectedTeam.EndDate.Month - selectedTeam.StartDate.Month;
-
-            foreach(Employee emp in selectedTeam.Employees.ToList())
-            {
-                monthlyPayExpense += emp.Pay;
-            }
-
-            totalPayExpense = monthsInt * monthlyPayExpense;
-
-            return totalPayExpense;
-        }
-
-        private void dataGridAllEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(comboBoxTeams.SelectedIndex > -1)
-            {
-                buttonAdd.IsEnabled = true;
-                buttonRemove.IsEnabled = false;
-            }
-            else
-            {
-                MessageBox.Show("Vælg et hold for at tilføje en ansat.");
-            }
-
-        }
-
         private void DataGridMembers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -103,6 +72,19 @@ namespace FluentAPI.GUI
             {
                 MessageBox.Show("Vælg et hold for at fjerne en ansat.");
             }
+        }
+        private void dataGridAllEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(comboBoxTeams.SelectedIndex > -1)
+            {
+                buttonAdd.IsEnabled = true;
+                buttonRemove.IsEnabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Vælg et hold for at tilføje en ansat.");
+            }
+
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
@@ -137,7 +119,6 @@ namespace FluentAPI.GUI
                 textBoxTeamDescription.Text = selectedTeam?.Description;
                 datePickerStartDate.SelectedDate = selectedTeam?.StartDate;
                 datePickerEndDate.SelectedDate = selectedTeam?.EndDate;
-
                 textBoxExpenses.Text = CalculateTeamExpenses(selectedTeam).ToString();
             }
             else
@@ -145,10 +126,8 @@ namespace FluentAPI.GUI
                 textBoxTeamDescription.Text = "";
                 datePickerStartDate.SelectedDate = DateTime.Now;
                 datePickerEndDate.SelectedDate = DateTime.Now.AddDays(7);
-
                 textBoxExpenses.Text = "";
             }
-
         }
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)
@@ -231,6 +210,22 @@ namespace FluentAPI.GUI
             dataGridMembers.ItemsSource = null;
             buttonSave.IsEnabled = true;
             buttonUpdate.IsEnabled = false;
+        }
+        public static decimal CalculateTeamExpenses(Team selectedTeam)
+        {
+            decimal monthlyPayExpense = 0;
+            decimal totalPayExpense = 0;
+
+            int monthsInt = ((selectedTeam.EndDate.Year - selectedTeam.StartDate.Year) * 12) + selectedTeam.EndDate.Month - selectedTeam.StartDate.Month;
+
+            foreach (Employee emp in selectedTeam.Employees.ToList())
+            {
+                monthlyPayExpense += emp.Pay;
+            }
+
+            totalPayExpense = monthsInt * monthlyPayExpense;
+
+            return totalPayExpense;
         }
     }
 }
