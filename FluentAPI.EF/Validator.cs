@@ -64,7 +64,7 @@ namespace FluentAPI.EF
         {
             bool valid = false;
 
-            if(startDate > domainStart)
+            if(startDate < domainStart)
             {
 
             }
@@ -115,11 +115,11 @@ namespace FluentAPI.EF
         {
             bool valid = false;
 
-            if(birthDate < DateTime.Now)
+            if(birthDate > DateTime.Now)
             {
 
             }
-            else if(birthDate > DateTime.Today.AddYears(-70) )
+            else if(birthDate < DateTime.Today.AddYears(-70) )
             {
 
             }
@@ -134,11 +134,11 @@ namespace FluentAPI.EF
         {
             bool valid = false;
 
-            if(hiringDate < DateTime.Today)
+            if(hiringDate > DateTime.Today)
             {
 
             }
-            else if(hiringDate > birthDate)
+            else if(hiringDate < birthDate)
             {
 
             }
@@ -152,7 +152,7 @@ namespace FluentAPI.EF
         {
             bool valid = false;
 
-            if (cpr.ToString().Length != 8)
+            if (cpr.ToString().Length != 10)
             {
 
             }

@@ -30,7 +30,7 @@ namespace FluentAPI.GUI
             InitializeComponent();
             model = new Model();
             UpdateTeamsComboBox();
-            dataGridAllEmployees.ItemsSource = model.Employees.ToList();
+            UpdateAllEmployeesDateGrid();
         }
 
         private void UpdateTeamsComboBox()
@@ -44,10 +44,20 @@ namespace FluentAPI.GUI
             dataGridMembers.ItemsSource = selectedTeam.Employees.ToList();
         }
 
+        public void UpdateAllEmployeesDateGrid()
+        {
+            dataGridAllEmployees.ItemsSource = model.Employees.ToList();
+        }
+
         private void comboBoxTeams_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             UpdateTeamData();
             dataGridMembers.ItemsSource = selectedTeam.Employees.ToList();
+            checkBoxNewTeam.IsChecked = false;
+            buttonSave.IsEnabled = false;
+            buttonUpdate.IsEnabled = true;
+
         }
 
         public static decimal CalculateTeamExpenses(Team selectedTeam)
@@ -69,14 +79,30 @@ namespace FluentAPI.GUI
 
         private void dataGridAllEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            buttonAdd.IsEnabled = true;
-            buttonRemove.IsEnabled = false;
+            if(comboBoxTeams.SelectedIndex > -1)
+            {
+                buttonAdd.IsEnabled = true;
+                buttonRemove.IsEnabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Vælg et hold for at tilføje en ansat.");
+            }
+
         }
 
         private void DataGridMembers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            buttonAdd.IsEnabled = false;
-            buttonRemove.IsEnabled = true;
+
+            if (comboBoxTeams.SelectedIndex > -1)
+            {
+                buttonAdd.IsEnabled = false;
+                buttonRemove.IsEnabled = true;
+            }
+            else
+            {
+                MessageBox.Show("Vælg et hold for at fjerne en ansat.");
+            }
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
@@ -105,12 +131,24 @@ namespace FluentAPI.GUI
 
         private void UpdateTeamData()
         {
-            selectedTeam = comboBoxTeams.SelectedItem as Team;
-            textBoxTeamDescription.Text = selectedTeam?.Description;
-            datePickerStartDate.SelectedDate = selectedTeam?.StartDate;
-            datePickerEndDate.SelectedDate = selectedTeam?.EndDate;
+            if(comboBoxTeams.SelectedItem != null)
+            {
+                selectedTeam = comboBoxTeams.SelectedItem as Team;
+                textBoxTeamDescription.Text = selectedTeam?.Description;
+                datePickerStartDate.SelectedDate = selectedTeam?.StartDate;
+                datePickerEndDate.SelectedDate = selectedTeam?.EndDate;
 
-            textBoxExpenses.Text = CalculateTeamExpenses(selectedTeam).ToString();
+                textBoxExpenses.Text = CalculateTeamExpenses(selectedTeam).ToString();
+            }
+            else
+            {
+                textBoxTeamDescription.Text = "";
+                datePickerStartDate.SelectedDate = DateTime.Now;
+                datePickerEndDate.SelectedDate = DateTime.Now.AddDays(7);
+
+                textBoxExpenses.Text = "";
+            }
+
         }
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)
@@ -145,7 +183,6 @@ namespace FluentAPI.GUI
             {
                 MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
             }
-
             UpdateTeamsComboBox();
         }
 
@@ -184,6 +221,16 @@ namespace FluentAPI.GUI
                     MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
                 }
             }
+        }
+
+        private void checkBoxNewTeam_Checked(object sender, RoutedEventArgs e)
+        {
+            comboBoxTeams.SelectedItem = null;
+            buttonAdd.IsEnabled = false;
+            buttonRemove.IsEnabled = false;
+            dataGridMembers.ItemsSource = null;
+            buttonSave.IsEnabled = true;
+            buttonUpdate.IsEnabled = false;
         }
     }
 }

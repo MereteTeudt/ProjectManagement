@@ -151,7 +151,6 @@
                                 Content="Gem"
                                 Grid.Column="2"
                                 Grid.Row="8"
-                                IsEnabled="False"
                                 Click="ButtonSaveEmployee_Click" />
                     </Grid>
                 </Grid>

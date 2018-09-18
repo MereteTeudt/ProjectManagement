@@ -23,6 +23,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Content="Projekt:"
                    Grid.Column="0"></Label>
@@ -36,11 +37,18 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <CheckBox x:Name="checkBoxNewProject"
+                      Content="Nyt Projekt"
+                      Grid.Column="2"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center"
+                      Checked="checkBoxNewProject_Checked">
+            </CheckBox>
             <DataGrid x:Name="dataGridAffiliatedTeams"
                       CanUserAddRows="false"
                       AutoGenerateColumns="False"
                       Grid.Column="0"
-                      Grid.ColumnSpan="2"
+                      Grid.ColumnSpan="3"
                       Grid.Row="1"
                       Grid.RowSpan="2"
                       SelectionChanged="dataGridAffiliatedTeams_SelectionChanged">
@@ -63,7 +71,7 @@
                       CanUserAddRows="false"
                       AutoGenerateColumns="False"
                       Grid.Column="0"
-                      Grid.ColumnSpan="2"
+                      Grid.ColumnSpan="3"
                       Grid.Row="4"
                       Grid.RowSpan="2"
                       SelectionChanged="dataGridAllTeams_SelectionChanged">
@@ -95,56 +103,56 @@
                     Click="buttonRemove_Click">
             </Button>
             <Label Content="Projekt Navn:"
-                   Grid.Column="3"
+                   Grid.Column="4"
                    Grid.Row="0">
             </Label>
             <TextBox x:Name="textBoxProjectName"
-                     Grid.Column="4"
+                     Grid.Column="5"
                      Grid.Row="0">
             </TextBox>
             <Label Content="Projekt Beskrivelse:"
-                   Grid.Column="3"
+                   Grid.Column="4"
                    Grid.Row="1">
             </Label>
             <TextBox x:Name="textBoxProjectDescription"
-                     Grid.Column="4"
+                     Grid.Column="5"
                      Grid.Row="1">
             </TextBox>
             <Label Content="Start:"
-                   Grid.Column="3"
+                   Grid.Column="4"
                    Grid.Row="2">
             </Label>
             <DatePicker x:Name="datePickerStartDate"
-                        Grid.Column="4"
+                        Grid.Column="5"
                         Grid.Row="2">
             </DatePicker>
             <Label Content="Slut:"
-                   Grid.Column="3"
+                   Grid.Column="4"
                    Grid.Row="3">
             </Label>
             <DatePicker x:Name="datePickerEndDate"
-                        Grid.Column="4"
+                        Grid.Column="5"
                         Grid.Row="3">
             </DatePicker>
             <Label Content="Budgetgrænse:"
-                   Grid.Column="3"
+                   Grid.Column="4"
                    Grid.Row="4">
             </Label>
             <TextBox x:Name="textBoxBudget"
-                     Grid.Column="4"
+                     Grid.Column="5"
                      Grid.Row="4">
             </TextBox>
             <Button x:Name="buttonUpdate"
                     IsEnabled="False"
                     Content="Opdater"
-                    Grid.Column="3"
+                    Grid.Column="4"
                     Grid.Row="6"
                     Click="buttonUpdate_Click">
             </Button>
             <Button x:Name="buttonSave"
                     IsEnabled="false"
                     Content="Gem"
-                    Grid.Column="4"
+                    Grid.Column="5"
                     Grid.Row="6"
                     Click="buttonSave_Click">
             </Button>

@@ -23,13 +23,15 @@ namespace FluentAPI.GUI
     {
         protected Model model;
         private Employee selectedEmployee;
+        private TeamUserControl teamUserControl = new TeamUserControl();
+        private ProjectUserControl projectUserControl = new ProjectUserControl();
         public EmployeeUserControl()
         {
             InitializeComponent();
             model = new Model();
             UpdateDataGrid();
             this.gridEmployee.DataContext = selectedEmployee;
-            //SetDataToDefault();
+            SetDataToDefault();
         }
 
         private void DataGridEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -80,6 +82,9 @@ namespace FluentAPI.GUI
                 model.Employees.Add(employee);
                 model.SaveChanges();
                 UpdateDataGrid();
+                teamUserControl.UpdateAllEmployeesDateGrid();
+                projectUserControl.UpdateAllTeamsDataGrid();
+
             }
             catch (Exception)
             {
@@ -119,7 +124,7 @@ namespace FluentAPI.GUI
 
             textBoxEmployeeFirstName.Text = "";
             textBoxEmployeeLastName.Text = "";
-            textBoxEmployeeCPR.Text = "00000000";
+            textBoxEmployeeCPR.Text = "1111111111";
             textBoxEmployeeSalary.Text = "0.0";
             textBoxEmail.Text = "";
             textBoxPhone.Text = "000000";

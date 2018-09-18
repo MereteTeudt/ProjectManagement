@@ -49,7 +49,7 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (Validator.IsValidDescription(value))
+                if (!Validator.IsValidDescription(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
                         value, $"{nameof(Description)} Ugyldig beskrivelse. Beskrivelse må maks indeholde 1000 karakterer og feltet må ikke være tomt");
@@ -67,7 +67,7 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (Validator.IsValidStartDate(value))
+                if (!Validator.IsValidStartDate(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
                         value, $"{nameof(StartDate)} Ugyldig dato. Holdet kan ikke startes før firmaets stiftelsesdato(1950)");

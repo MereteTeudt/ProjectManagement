@@ -21,6 +21,9 @@ namespace FluentAPI.EF
             BirthDate = birthDate;
         }
 
+        public Person()
+        { }
+
         public string FirstName
         {
             get

@@ -30,7 +30,7 @@ namespace FluentAPI.GUI
             InitializeComponent();
             model = new Model();
             UpdateProjectsComboBox();
-            dataGridAllTeams.ItemsSource = model.Teams.ToList();
+            UpdateAllTeamsDataGrid();
         }
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -66,6 +66,10 @@ namespace FluentAPI.GUI
             selectedProject = comboBoxProjects.SelectedItem as Project;
             dataGridAffiliatedTeams.ItemsSource = selectedProject.Teams.ToList();
         }
+        public void UpdateAllTeamsDataGrid()
+        {
+            dataGridAllTeams.ItemsSource = model.Teams.ToList();
+        }
         private void UpdateProjectData()
         {
             selectedProject = comboBoxProjects.SelectedItem as Project;
@@ -83,14 +87,28 @@ namespace FluentAPI.GUI
 
         private void dataGridAffiliatedTeams_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            buttonAdd.IsEnabled = false;
-            buttonRemove.IsEnabled = true;
+            if (comboBoxProjects.SelectedIndex > -1)
+            {
+                buttonAdd.IsEnabled = false;
+                buttonRemove.IsEnabled = true;
+            }
+            else
+            {
+                MessageBox.Show("Vælg et projekt for at fjerne et hold.");
+            }
         }
 
         private void dataGridAllTeams_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            buttonAdd.IsEnabled = true;
-            buttonRemove.IsEnabled = false;
+            if (comboBoxProjects.SelectedIndex > -1)
+            {
+                buttonAdd.IsEnabled = true;
+                buttonRemove.IsEnabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Vælg et projekt for at fjerne et hold.");
+            }
         }
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)
@@ -176,6 +194,11 @@ namespace FluentAPI.GUI
                     MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
                 }
             }
+        }
+
+        private void checkBoxNewProject_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

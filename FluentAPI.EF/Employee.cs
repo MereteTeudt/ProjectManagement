@@ -21,7 +21,7 @@ namespace FluentAPI.EF
             Pay = pay;
         }
         public Employee()
-            :base(null, null, 0, DateTime.Now)
+            : base()
         { }
         public int Id { get; set; }
 
