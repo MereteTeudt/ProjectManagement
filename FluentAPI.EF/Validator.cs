@@ -28,7 +28,7 @@ namespace FluentAPI.EF
             {
 
             }
-            else if (Regex.IsMatch(text, @"^[a-zA-Z]+$"))
+            else if (!Regex.IsMatch(text, @"^[a-zA-Z]+$"))
             {
 
             }

@@ -69,7 +69,7 @@ namespace FluentAPI.GUI
         private void UpdateProjectData()
         {
             selectedProject = comboBoxProjects.SelectedItem as Project;
-            textBoxProjectInfo.Text = selectedProject?.Description;
+            textBoxProjectDescription.Text = selectedProject?.Description;
             datePickerStartDate.SelectedDate = selectedProject.StartDate;
             datePickerEndDate.SelectedDate = selectedProject.EndDate;
             textBoxBudget.Text = selectedProject.Budget.ToString();
@@ -98,7 +98,15 @@ namespace FluentAPI.GUI
             selectedProject = comboBoxProjects.SelectedItem as Project;
 
             UpdateOrSaveProject(selectedProject);
-            model.SaveChanges();
+            try
+            {
+                model.SaveChanges();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
+
             UpdateProjectsComboBox();
         }
 
@@ -107,47 +115,66 @@ namespace FluentAPI.GUI
             Project project = new Project();
 
             UpdateOrSaveProject(project);
-            model.Projects.Add(project);
-            model.SaveChanges();
+
+            try
+            {
+                model.Projects.Add(project);
+                model.SaveChanges();
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
+
             UpdateProjectsComboBox();
         }
 
         private void UpdateOrSaveProject(Project project)
         {
-            try
-            {
-                project.Name = textBoxProjectName.Text;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            decimal parsedBudget;
 
-            try
+            if (!Validator.IsValidName(textBoxProjectName.Text))
             {
-               project.Description = textBoxProjectInfo.Text;
+                MessageBox.Show("Ugyldigt navn. Et navn kan kun bestå af bogstaver og feltet må ikke være blankt.");
             }
-            catch (ArgumentOutOfRangeException error)
+            else if (!Validator.IsValidDescription(textBoxProjectDescription.Text))
             {
-                MessageBox.Show(error.Message);
+                MessageBox.Show("Ugyldig beskrivelse.Beskrivelse må maks indeholde 1000 karakterer og feltet må ikke være tomt");
             }
+            else if (!Validator.IsValidStartDate(datePickerStartDate.SelectedDate.Value))
+            {
+                MessageBox.Show("Ugyldig dato. Holdet kan ikke startes før firmaets stiftelsesdato(1950)");
+            }
+            else if (!Validator.IsValidEndDate(datePickerEndDate.SelectedDate.Value, datePickerStartDate.SelectedDate.Value))
+            {
+                MessageBox.Show("Ugyldig dato. Slutdato kan ikke være før Startdato.");
+            }
+            else if (!decimal.TryParse(textBoxBudget.Text, out parsedBudget))
+            {
+                MessageBox.Show("Ugyldigt beløb. Beløbet kan kun bestå af tal.");
+            }
+            else if (!Validator.IsValidAmount(parsedBudget))
+            {
+                MessageBox.Show("Ugyldigt beløb. Beløbet kan ikke være mindre end nul.");
+            }
+            else
+            {
+                try
+                {
+                    project.Name = textBoxProjectName.Text;
 
-            try
-            {
-                project.StartDate = datePickerStartDate.SelectedDate.Value;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
+                    project.Description = textBoxProjectDescription.Text;
 
-            try
-            {
-                project.EndDate = datePickerEndDate.SelectedDate.Value;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
+                    project.StartDate = datePickerStartDate.SelectedDate.Value;
+
+                    project.EndDate = datePickerEndDate.SelectedDate.Value;
+
+                    project.Budget = parsedBudget;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+                }
             }
         }
     }

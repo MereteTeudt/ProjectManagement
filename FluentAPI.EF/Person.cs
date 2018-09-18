@@ -29,11 +29,12 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (!Validator.IsValidName(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(FirstName)} feltet må ikke være tomt");
+                        value, $"{nameof(FirstName)} Ugyldigt navn. Et navn kan kun bestå af bogstaver, højst 100 karakterer og feltet må ikke være blankt.");
                 }
+
                 firstName = value;
             }
         }
@@ -46,10 +47,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (!Validator.IsValidName(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(LastName)} feltet må ikke være tomt");
+                        value, $"{nameof(LastName)} Ugyldigt navn. Et navn kan kun bestå af bogstaver, højst 100 karakterer og feltet må ikke være blankt.");
                 }
                 lastName = value;
             }
@@ -63,10 +64,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (DateTime.Today.Year - value.Year > 100)
+                if (!Validator.IsValidBirthDate(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(BirthDate)} alder kan ikke overskride 100 år");
+                        value, $"{nameof(BirthDate)} Ugyldig alder. Ansatte kan ikke være over 70 år.");
                 }
                 birthDate = value;
             }
@@ -81,10 +82,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (value.ToString().Length != 8)
+                if (!Validator.IsValidCPR(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(CPR)} nummeret skal bestå af 8 cifre");
+                        value, $"{nameof(CPR)} Ugyldigt CPR nummer. Et CPR nummer kan kun bestå af tal.");
                 }
                 cpr = value;
             }

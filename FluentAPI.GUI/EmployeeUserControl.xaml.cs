@@ -114,19 +114,19 @@ namespace FluentAPI.GUI
             dataGridEmployees.ItemsSource = model.Employees.ToList();
         }
 
-        //private void SetDataToDefault()
-        //{
+        private void SetDataToDefault()
+        {
 
-        //    textBoxEmployeeFirstName.Text = "";
-        //    textBoxEmployeeLastName.Text = "";
-        //    textBoxEmployeeCPR.Text = "00000000";
-        //    textBoxEmployeeSalary.Text = "0.0";
-        //    textBoxEmail.Text = "";
-        //    textBoxPhone.Text = "000000";
+            textBoxEmployeeFirstName.Text = "";
+            textBoxEmployeeLastName.Text = "";
+            textBoxEmployeeCPR.Text = "00000000";
+            textBoxEmployeeSalary.Text = "0.0";
+            textBoxEmail.Text = "";
+            textBoxPhone.Text = "000000";
 
-        //    datePickerHiringDate.SelectedDate = DateTime.Today;
-        //    datePickerBirthDate.SelectedDate = new DateTime(1950, 1, 1);
-        //}
+            datePickerHiringDate.SelectedDate = DateTime.Today;
+            datePickerBirthDate.SelectedDate = new DateTime(1950, 1, 1);
+        }
 
         private void UpdateOrSaveEmployee(Employee employee)
         {
@@ -175,11 +175,11 @@ namespace FluentAPI.GUI
 
                     employee.BirthDate = datePickerBirthDate.SelectedDate.Value;
 
-                    employee.CPR = int.Parse(textBoxEmployeeCPR.Text);
+                    employee.CPR = parsedCPR;
 
                     employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
 
-                    employee.Pay = decimal.Parse(textBoxEmployeeSalary.Text);
+                    employee.Pay = parsedPay;
                 
                     employee.ContactInfo.Email = textBoxEmail.Text;
 

@@ -11,7 +11,7 @@ namespace FluentAPI.EF
         private string name;
         private string description;
         private DateTime startDate;
-        private DateTime expectedEndDate;
+        private DateTime endDate;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Team()
@@ -31,10 +31,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (!Validator.IsValidName(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(Name)} feltet må ikke være tomt");
+                        value, $"{nameof(Name)} Ugyldigt navn. Et navn kan kun bestå af bogstaver, højst 100 karakterer og feltet må ikke være blankt.");
                 }
                 name = value;
             }
@@ -49,10 +49,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (Validator.IsValidDescription(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(Description)} feltet må ikke være tomt");
+                        value, $"{nameof(Description)} Ugyldig beskrivelse. Beskrivelse må maks indeholde 1000 karakterer og feltet må ikke være tomt");
                 }
                 description = value;
             }
@@ -67,30 +67,30 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (value > DateTime.Today)
+                if (Validator.IsValidStartDate(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(StartDate)} holdet kan ikke startes i fremtiden");
+                        value, $"{nameof(StartDate)} Ugyldig dato. Holdet kan ikke startes før firmaets stiftelsesdato(1950)");
                 }
                 startDate = value;
             }
         }
 
         [Column(TypeName = "datetime2")]
-        public DateTime ExpectedEndDate
+        public DateTime EndDate
         {
             get
             {
-                return expectedEndDate;
+                return endDate;
             }
             set
             {
-                if (value < DateTime.Today)
+                if (!Validator.IsValidEndDate(value, StartDate))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(ExpectedEndDate)} feltet må ikke være tomt");
+                        value, $"{nameof(endDate)} Ugyldig dato. Slutdato kan ikke være før Startdato.");
                 }
-                expectedEndDate = value;
+                endDate = value;
             }
         }
 

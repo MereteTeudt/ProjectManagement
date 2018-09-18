@@ -7,7 +7,7 @@ namespace FluentAPI.EF
     using System.Data.Entity.Spatial;
 
     /// <summary>
-    /// 
+    /// Represents an employee, inheritst from Person
     /// </summary>
     public partial class Employee : Person
     {
@@ -34,10 +34,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (value < birthDate)
+                if (!Validator.IsValidHiringDate(value, BirthDate))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(HiringDate)} hyringsdato kan ikke være ældre end fødselsdato");
+                        value, $"{nameof(HiringDate)} Ugyldig hyringsdato.Hyringsdato skal være senere end den ansattes fødselsdato og firmaets stiftelse.");
                 }
                 hiringDate = value;
             }
@@ -51,10 +51,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (value < 0)
+                if (!Validator.IsValidAmount(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(Pay)} beløbet kan ikke være mindre end 0");
+                        value, $"{nameof(Pay)} Ugyldigt beløb. Beløbet kan ikke være mindre end nul.");
                 }
                 pay = value;
             }

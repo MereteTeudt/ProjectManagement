@@ -102,7 +102,7 @@
                    Grid.Column="3"
                    Grid.Row="1">
             </Label>
-            <TextBox x:Name="textBoxTeamInfo"
+            <TextBox x:Name="textBoxTeamDescription"
                      Grid.Column="4"
                      Grid.Row="1">
             </TextBox>

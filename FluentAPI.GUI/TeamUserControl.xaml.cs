@@ -55,7 +55,7 @@ namespace FluentAPI.GUI
             decimal monthlyPayExpense = 0;
             decimal totalPayExpense = 0;
 
-            int monthsInt = ((selectedTeam.ExpectedEndDate.Year - selectedTeam.StartDate.Year) * 12) + selectedTeam.ExpectedEndDate.Month - selectedTeam.StartDate.Month;
+            int monthsInt = ((selectedTeam.EndDate.Year - selectedTeam.StartDate.Year) * 12) + selectedTeam.EndDate.Month - selectedTeam.StartDate.Month;
 
             foreach(Employee emp in selectedTeam.Employees.ToList())
             {
@@ -106,9 +106,9 @@ namespace FluentAPI.GUI
         private void UpdateTeamData()
         {
             selectedTeam = comboBoxTeams.SelectedItem as Team;
-            textBoxTeamInfo.Text = selectedTeam?.Description;
+            textBoxTeamDescription.Text = selectedTeam?.Description;
             datePickerStartDate.SelectedDate = selectedTeam?.StartDate;
-            datePickerEndDate.SelectedDate = selectedTeam?.ExpectedEndDate;
+            datePickerEndDate.SelectedDate = selectedTeam?.EndDate;
 
             textBoxExpenses.Text = CalculateTeamExpenses(selectedTeam).ToString();
         }
@@ -118,7 +118,15 @@ namespace FluentAPI.GUI
             selectedTeam = comboBoxTeams.SelectedItem as Team;
 
             UpdateOrSaveTeam(selectedTeam);
-            model.SaveChanges();
+            try
+            {
+                model.SaveChanges();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
+
             UpdateTeamsComboBox();
 
         }
@@ -128,47 +136,53 @@ namespace FluentAPI.GUI
             Team team = new Team();
 
             UpdateOrSaveTeam(team);
-            model.Teams.Add(team);
-            model.SaveChanges();
+            try
+            {
+                model.Teams.Add(team);
+                model.SaveChanges();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
+
             UpdateTeamsComboBox();
         }
 
         private void UpdateOrSaveTeam(Team team)
         {
-            try
+            if (!Validator.IsValidName(textBoxTeamName.Text))
             {
-                team.Name = textBoxTeamName.Text;
+                MessageBox.Show("Ugyldigt navn. Et navn kan kun bestå af bogstaver og feltet må ikke være blankt.");
             }
-            catch (ArgumentOutOfRangeException error)
+            else if(!Validator.IsValidDescription(textBoxTeamDescription.Text))
             {
-                MessageBox.Show(error.Message);
+                MessageBox.Show("Ugyldig beskrivelse.Beskrivelse må maks indeholde 1000 karakterer og feltet må ikke være tomt");
             }
+            else if (!Validator.IsValidStartDate(datePickerStartDate.SelectedDate.Value))
+            {
+                MessageBox.Show("Ugyldig dato. Holdet kan ikke startes før firmaets stiftelsesdato(1950)");
+            }
+            else if (!Validator.IsValidEndDate(datePickerEndDate.SelectedDate.Value, datePickerStartDate.SelectedDate.Value))
+            {
+                MessageBox.Show("Ugyldig dato. Slutdato kan ikke være før Startdato.");
+            }
+            else
+            {
+                try
+                {
+                    team.Name = textBoxTeamName.Text;
 
-            try
-            {
-                team.Description = textBoxTeamInfo.Text;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
+                    team.Description = textBoxTeamDescription.Text;
 
-            try
-            {
-                team.StartDate = datePickerStartDate.SelectedDate.Value;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
-            }
+                    team.StartDate = datePickerStartDate.SelectedDate.Value;
 
-            try
-            {
-                team.ExpectedEndDate = datePickerEndDate.SelectedDate.Value;
-            }
-            catch (ArgumentOutOfRangeException error)
-            {
-                MessageBox.Show(error.Message);
+                    team.EndDate = datePickerEndDate.SelectedDate.Value;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+                }
             }
         }
     }
