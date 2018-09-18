@@ -30,7 +30,7 @@ namespace FluentAPI.GUI
             InitializeComponent();
             model = new Model();
             UpdateDataGrid();
-            this.gridEmployee.DataContext = selectedEmployee;
+            //this.gridEmployee.DataContext = selectedEmployee;
             SetDataToDefault();
         }
 
@@ -135,7 +135,6 @@ namespace FluentAPI.GUI
 
         private void UpdateOrSaveEmployee(Employee employee)
         {
-            int parsedCPR;
             decimal parsedPay;
 
             if (!Validator.IsValidName(textBoxEmployeeFirstName.Text))
@@ -154,11 +153,7 @@ namespace FluentAPI.GUI
             {
                 MessageBox.Show("Ugyldig hyringsdato. Hyringsdato skal være senere end den ansattes fødselsdato og firmaets stiftelse.");
             }
-            else if (!int.TryParse(textBoxEmployeeCPR.Text, out parsedCPR))
-            {
-                MessageBox.Show("Ugyldigt CPR nummer. Et CPR nummer kan kun bestå af tal.");
-            }
-            else if (!Validator.IsValidCPR(parsedCPR))
+            else if (!Validator.IsValidCPR(textBoxEmployeeCPR.Text))
             {
                 MessageBox.Show("Ugyldigt CPR nummer. Et CPR nummer skal være præcis 8 cifre langt.");
             }
@@ -180,7 +175,7 @@ namespace FluentAPI.GUI
 
                     employee.BirthDate = datePickerBirthDate.SelectedDate.Value;
 
-                    employee.CPR = parsedCPR;
+                    employee.CPR = textBoxEmployeeCPR.Text;
 
                     employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
 

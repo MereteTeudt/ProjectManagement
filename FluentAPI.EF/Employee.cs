@@ -15,7 +15,7 @@ namespace FluentAPI.EF
         DateTime hiringDate;
         decimal pay;
 
-        public Employee(string firstName, string lastName, int cpr, DateTime birthDate, DateTime hiringdate, decimal pay)
+        public Employee(string firstName, string lastName, string cpr, DateTime birthDate, DateTime hiringdate, decimal pay)
             :base(firstName, lastName, cpr, birthDate)
         {
             Pay = pay;

@@ -38,22 +38,63 @@ namespace FluentAPI.GUI
             comboBoxTeams.ItemsSource = model.Teams.ToList();
         }
 
+        /// <summary>
+        /// Update methods
+        /// </summary>
+
         private void UpdateMembersDataGrid()
         {
             selectedTeam = comboBoxTeams.SelectedItem as Team;
             dataGridMembers.ItemsSource = selectedTeam.Employees.ToList();
         }
-
+        /// <summary>
+        /// Updates the datagrid so it only contains employees who are not already in the team
+        /// </summary>
         public void UpdateAllEmployeesDateGrid()
         {
-            dataGridAllEmployees.ItemsSource = model.Employees.ToList();
+            if(selectedTeam != null)
+            {
+                List<Employee> employeesNotInTeam = model.Employees.ToList();
+
+                foreach (Employee e in selectedTeam.Employees)
+                {
+                    employeesNotInTeam.Remove(e);
+                }
+
+
+                dataGridAllEmployees.ItemsSource = employeesNotInTeam;
+            }
+            else
+            {
+                dataGridAllEmployees.ItemsSource = model.Employees.ToList();
+            }
+
         }
 
+        private void UpdateTeamData()
+        {
+            if (comboBoxTeams.SelectedItem != null)
+            {
+                selectedTeam = comboBoxTeams.SelectedItem as Team;
+                textBoxTeamDescription.Text = selectedTeam?.Description;
+                datePickerStartDate.SelectedDate = selectedTeam?.StartDate;
+                datePickerEndDate.SelectedDate = selectedTeam?.EndDate;
+                textBoxExpenses.Text = CalculateTeamExpenses(selectedTeam).ToString();
+            }
+            else
+            {
+                textBoxTeamDescription.Text = "";
+                datePickerStartDate.SelectedDate = DateTime.Now;
+                datePickerEndDate.SelectedDate = DateTime.Now.AddDays(7);
+                textBoxExpenses.Text = "";
+            }
+        }
         private void comboBoxTeams_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
             UpdateTeamData();
             dataGridMembers.ItemsSource = selectedTeam.Employees.ToList();
+            UpdateAllEmployeesDateGrid();
             checkBoxNewTeam.IsChecked = false;
             buttonSave.IsEnabled = false;
             buttonUpdate.IsEnabled = true;
@@ -96,6 +137,7 @@ namespace FluentAPI.GUI
             }
             model.SaveChanges();
             UpdateMembersDataGrid();
+            UpdateAllEmployeesDateGrid();
             UpdateTeamData();
         }
 
@@ -108,26 +150,8 @@ namespace FluentAPI.GUI
             }
             model.SaveChanges();
             UpdateMembersDataGrid();
+            UpdateAllEmployeesDateGrid();
             UpdateTeamData();
-        }
-
-        private void UpdateTeamData()
-        {
-            if(comboBoxTeams.SelectedItem != null)
-            {
-                selectedTeam = comboBoxTeams.SelectedItem as Team;
-                textBoxTeamDescription.Text = selectedTeam?.Description;
-                datePickerStartDate.SelectedDate = selectedTeam?.StartDate;
-                datePickerEndDate.SelectedDate = selectedTeam?.EndDate;
-                textBoxExpenses.Text = CalculateTeamExpenses(selectedTeam).ToString();
-            }
-            else
-            {
-                textBoxTeamDescription.Text = "";
-                datePickerStartDate.SelectedDate = DateTime.Now;
-                datePickerEndDate.SelectedDate = DateTime.Now.AddDays(7);
-                textBoxExpenses.Text = "";
-            }
         }
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)

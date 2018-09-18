@@ -25,10 +25,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (!Validator.IsValidEmail(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(Email)} feltet må ikke være tomt");
+                        value, $"{nameof(Email)} feltet må ikke være tomt, skal indehold @ og ende på .com eller .dk");
                 }
                 email = value;
             }
@@ -43,10 +43,10 @@ namespace FluentAPI.EF
             }
             set
             {
-                if (!value.All(Char.IsNumber))
+                if (!Validator.IsvalidPhone(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(Phone)} telefon numre kan kun bestå af tal");
+                        value, $"{nameof(Phone)} telefon numre kan kun bestå af tal og må ikke være længere end 25 tegn");
                 }
                 phone = value;
             }

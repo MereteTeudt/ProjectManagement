@@ -43,16 +43,52 @@ namespace FluentAPI.GUI
             selectedProject = comboBoxProjects.SelectedItem as Project;
             dataGridAffiliatedTeams.ItemsSource = selectedProject.Teams.ToList();
         }
-
+        /// <summary>
+        /// Updates the datagrid so it only contains teams who are not already in the selected project
+        /// </summary>
         public void UpdateAllTeamsDataGrid()
         {
-            dataGridAllTeams.ItemsSource = model.Teams.ToList();
+            if(selectedProject != null)
+            {
+                List<Team> teamsNotInProject = model.Teams.ToList();
+
+                foreach (Team t in selectedProject.Teams)
+                {
+                    teamsNotInProject.Remove(t);
+                }
+
+                dataGridAllTeams.ItemsSource = teamsNotInProject;
+            }
+            else
+            {
+                dataGridAllTeams.ItemsSource = model.Teams.ToList();
+            }
+        }
+
+        private void UpdateProjectData()
+        {
+            if (comboBoxProjects.SelectedItem != null)
+            {
+                selectedProject = comboBoxProjects.SelectedItem as Project;
+                textBoxProjectDescription.Text = selectedProject?.Description;
+                datePickerStartDate.SelectedDate = selectedProject.StartDate;
+                datePickerEndDate.SelectedDate = selectedProject.EndDate;
+                textBoxBudget.Text = selectedProject.Budget.ToString();
+            }
+            else
+            {
+                textBoxProjectDescription.Text = "";
+                datePickerStartDate.SelectedDate = DateTime.Now;
+                datePickerEndDate.SelectedDate = DateTime.Now.AddDays(7);
+                textBoxBudget.Text = "";
+            }
         }
 
         private void comboBoxProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateProjectData();
             dataGridAffiliatedTeams.ItemsSource = selectedProject.Teams.ToList();
+            UpdateAllTeamsDataGrid();
             checkBoxNewProject.IsChecked = false;
             buttonSave.IsEnabled = false;
             buttonUpdate.IsEnabled = true;
@@ -93,6 +129,7 @@ namespace FluentAPI.GUI
             }
             model.SaveChanges();
             UpdateAffiliatedTeamsDataGrid();
+            UpdateAllTeamsDataGrid();
             UpdateProjectData();
         }
 
@@ -105,26 +142,8 @@ namespace FluentAPI.GUI
             }
             model.SaveChanges();
             UpdateAffiliatedTeamsDataGrid();
+            UpdateAllTeamsDataGrid();
             UpdateProjectData();
-        }
-
-        private void UpdateProjectData()
-        {
-            if(comboBoxProjects.SelectedItem != null)
-            {
-                selectedProject = comboBoxProjects.SelectedItem as Project;
-                textBoxProjectDescription.Text = selectedProject?.Description;
-                datePickerStartDate.SelectedDate = selectedProject.StartDate;
-                datePickerEndDate.SelectedDate = selectedProject.EndDate;
-                textBoxBudget.Text = selectedProject.Budget.ToString();
-            }
-            else
-            {
-                textBoxProjectDescription.Text = "";
-                datePickerStartDate.SelectedDate = DateTime.Now;
-                datePickerEndDate.SelectedDate = DateTime.Now.AddDays(7);
-                textBoxBudget.Text = "";
-            }
         }
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)

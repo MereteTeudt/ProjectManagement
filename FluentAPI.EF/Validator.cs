@@ -148,11 +148,11 @@ namespace FluentAPI.EF
             }
             return valid;
         }
-        public static bool IsValidCPR(int cpr)
+        public static bool IsValidCPR(string cpr)
         {
             bool valid = false;
 
-            if (cpr.ToString().Length != 10)
+            if (cpr.Length != 10)
             {
 
             }
@@ -172,7 +172,11 @@ namespace FluentAPI.EF
         {
             bool valid = false;
 
-            if (!email.Contains("@"))
+            if(string.IsNullOrWhiteSpace(email))
+            {
+
+            }
+            else if (!email.Contains("@"))
             {
 
             }
@@ -186,11 +190,15 @@ namespace FluentAPI.EF
             }
             return valid;
         }
-    public static bool IsvalidPhone(int phone)
+    public static bool IsvalidPhone(string phone)
         {
             bool valid = false;
 
-            if (phone.ToString().Length > 6)
+            if (phone.Length > 25)
+            {
+
+            }
+            else if(!phone.All(Char.IsNumber))
             {
 
             }

@@ -10,10 +10,10 @@ namespace FluentAPI.EF
     {
         protected string firstName;
         protected string lastName;
-        protected int cpr;
+        protected string cpr;
         protected DateTime birthDate;
 
-        public Person(string firstName, string lastName, int cpr, DateTime birthDate)
+        public Person(string firstName, string lastName, string cpr, DateTime birthDate)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -77,7 +77,7 @@ namespace FluentAPI.EF
         }
 
 
-        public int CPR
+        public string CPR
         {
             get
             {
