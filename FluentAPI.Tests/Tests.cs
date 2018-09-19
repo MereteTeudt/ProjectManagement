@@ -20,6 +20,7 @@ namespace FluentAPI.Tests
         [TestMethod]
         public void AddNewProject()
         {
+            // arrange
             Model model = new Model();
             Project p = new Project();
             p.Name = "Something";
@@ -27,21 +28,40 @@ namespace FluentAPI.Tests
             p.StartDate = new DateTime(1990, 10, 10);
             p.EndDate = new DateTime(2000, 10, 10);
             p.Budget = 100.00m;
+            // act
             model.Projects.Add(p);
             int count = model.Projects.ToList().Count;
             model.SaveChanges();
             int newCount = model.Projects.ToList().Count;
+            // assert
             Assert.AreEqual(newCount, count + 1);
+        }
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+        [TestMethod]
+        public void InvalidEndDate()
+        {
+            // arrange
+            Model model = new Model();
+            Project p = new Project();
+            DateTime startDate = new DateTime(2010, 10, 10);
+            DateTime invalidEndDate = new DateTime(2000, 10, 10);
+            // act
+            p.StartDate = startDate;
+            p.EndDate = invalidEndDate;
+            // assert handled by ExpectedException
         }
 
         [TestMethod]
         public void UpdateProject()
         {
+            // arrange
             Model model = new Model();
             Project project = model.Projects.Where(p => p.Name == "Something").FirstOrDefault();
             string oldDescription = project.Description;
             project.Description = ((new Random()).Next(0,Int32.MaxValue)).ToString();
+            // act
             model.SaveChanges();
+            // assert
             Assert.AreNotEqual(oldDescription, project.Description);
         }
 
