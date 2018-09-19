@@ -50,7 +50,6 @@ namespace FluentAPI.GUI
         private void comboBoxProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedProject = comboBoxProjects.SelectedItem as Project;
-
             //Shows the cost for the selected project
             textBlockExpenses.Text = CalculateProjectExpenses(selectedProject).ToString();
         }
