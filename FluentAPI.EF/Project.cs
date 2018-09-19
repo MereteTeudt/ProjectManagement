@@ -14,7 +14,6 @@ namespace FluentAPI.EF
         private DateTime startDate;
         private DateTime endDate;
         private decimal budget;
-        private TimeSpan projectDuration;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Project()
@@ -115,7 +114,7 @@ namespace FluentAPI.EF
             }
         }
 
-        public TimeSpan ProjectDuration
+        public TimeSpan Duration
         {
             get
             {

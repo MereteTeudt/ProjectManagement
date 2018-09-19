@@ -65,7 +65,7 @@ namespace FluentAPI.GUI
                 datePickerBirthDate.SelectedDate = selectedEmployee?.BirthDate;
                 textBoxEmployeeCPR.Text = "" + selectedEmployee?.CPR;
                 datePickerHiringDate.SelectedDate = selectedEmployee?.HiringDate;
-                textBoxEmployeeSalary.Text = "" + selectedEmployee?.Pay;
+                textBoxEmployeeSalary.Text = "" + selectedEmployee?.Salary;
 
                 textBoxEmail.Text = selectedEmployee?.ContactInfo?.Email;
                 textBoxPhone.Text = selectedEmployee?.ContactInfo?.Phone;
@@ -150,7 +150,7 @@ namespace FluentAPI.GUI
 
         private void UpdateOrSaveEmployee(Employee employee)
         {
-            decimal parsedPay;
+            decimal parsedSalary;
 
             if (!Validator.IsValidName(textBoxEmployeeFirstName.Text))
             {
@@ -172,11 +172,11 @@ namespace FluentAPI.GUI
             {
                 MessageBox.Show("Ugyldigt CPR nummer. Et CPR nummer skal være præcis 8 cifre langt.");
             }
-            else if (!decimal.TryParse(textBoxEmployeeSalary.Text, out parsedPay))
+            else if (!decimal.TryParse(textBoxEmployeeSalary.Text, out parsedSalary))
             {
                 MessageBox.Show("Ugyldigt beløb. Beløbet kan kun bestå af tal.");
             }
-            else if (!Validator.IsValidAmount(parsedPay))
+            else if (!Validator.IsValidAmount(parsedSalary))
             {
                 MessageBox.Show("Ugyldigt beløb. Beløbet kan ikke være mindre end nul.");
             }
@@ -194,7 +194,7 @@ namespace FluentAPI.GUI
 
                     employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
 
-                    employee.Pay = parsedPay;
+                    employee.Salary = parsedSalary;
                 
                     employee.ContactInfo.Email = textBoxEmail.Text;
 

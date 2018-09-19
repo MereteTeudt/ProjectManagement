@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FluentAPI.EF
 {
+    // Represents a person with firstname, lastname, cpr and birthdate
     public abstract class Person
     {
         protected string firstName;
@@ -23,7 +24,7 @@ namespace FluentAPI.EF
 
         public Person()
         { }
-
+        //Validates that a name can only be letters, cannot be nothing and must be within the bounds of the database
         public string FirstName
         {
             get

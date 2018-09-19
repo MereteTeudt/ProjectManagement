@@ -7,18 +7,19 @@ namespace FluentAPI.EF
     using System.Data.Entity.Spatial;
 
     /// <summary>
-    /// Represents an employee, inheritst from Person
+    /// Represents an employee, inheritst from Person. In addition to the properties of a person, an employee also has a hiringdate and salary
     /// </summary>
     public partial class Employee : Person
     {
-
         DateTime hiringDate;
-        decimal pay;
+        decimal salary;
 
-        public Employee(string firstName, string lastName, string cpr, DateTime birthDate, DateTime hiringdate, decimal pay)
+        // Constructor to show constructor chaining
+        public Employee(string firstName, string lastName, string cpr, DateTime birthDate, DateTime hiringdate, decimal salary)
             :base(firstName, lastName, cpr, birthDate)
         {
-            Pay = pay;
+            Salary = salary;
+            HiringDate = hiringdate;
         }
         public Employee()
             : base()
@@ -43,20 +44,20 @@ namespace FluentAPI.EF
             }
         }
         [Column(TypeName = "money")]
-        public decimal Pay
+        public decimal Salary
         {
             get
             {
-                return pay;
+                return salary;
             }
             set
             {
                 if (!Validator.IsValidAmount(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(Pay)} Ugyldigt beløb. Beløbet kan ikke være mindre end nul.");
+                        value, $"{nameof(Salary)} Ugyldigt beløb. Beløbet kan ikke være mindre end nul.");
                 }
-                pay = value;
+                salary = value;
             }
         }
 

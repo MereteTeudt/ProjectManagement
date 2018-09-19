@@ -28,7 +28,10 @@ namespace FluentAPI.EF
             get;
             set;
         }
-
+        TimeSpan Duration
+        {
+            get;
+        }
         decimal Calculate();
     }
 }
