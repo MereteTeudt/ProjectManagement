@@ -137,7 +137,8 @@
             </Label>
             <TextBox x:Name="textBoxExpenses"
                      Grid.Column="5"
-                     Grid.Row="4">
+                     Grid.Row="4"
+                     IsReadOnly="true">
             </TextBox>
             <Button x:Name="buttonUpdate"
                     IsEnabled="False"

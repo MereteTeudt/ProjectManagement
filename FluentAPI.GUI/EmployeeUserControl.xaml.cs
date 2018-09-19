@@ -122,6 +122,8 @@ namespace FluentAPI.GUI
             {
                 model.SaveChanges();
                 UpdateDataGrid();
+                teamUserControl.UpdateAllEmployeesDateGrid();
+                projectUserControl.UpdateAllTeamsDataGrid();
             }
             catch (Exception ex)
             {
@@ -137,7 +139,7 @@ namespace FluentAPI.GUI
             textBoxEmployeeCPR.Text = "";
             textBoxEmployeeSalary.Text = "0.0";
             textBoxEmail.Text = "";
-            textBoxPhone.Text = "000000";
+            textBoxPhone.Text = "";
 
             datePickerHiringDate.SelectedDate = DateTime.Today;
             datePickerBirthDate.SelectedDate = new DateTime(1950, 1, 1);
@@ -212,9 +214,7 @@ namespace FluentAPI.GUI
 
                     employee.BirthDate = datePickerBirthDate.SelectedDate.Value;
 
-                    employee.CPR = 
-                        selectedEmployee.BirthDate.ToString("dd") + selectedEmployee.BirthDate.ToString("MM") + selectedEmployee.BirthDate.ToString("yy") 
-                        + selectedEmployee.CPR.Substring(selectedEmployee.CPR.Length - 4);
+                    employee.CPR = textBoxEmployeeCPR.Text;
 
                     employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
 

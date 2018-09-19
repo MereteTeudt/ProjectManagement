@@ -24,6 +24,7 @@ namespace FluentAPI.GUI
         private Model model;
         private Project selectedProject;
         private Team selectedTeam;
+        private OverviewUserControl overviewUserControl = new OverviewUserControl();
 
         public ProjectUserControl()
         {
@@ -212,6 +213,8 @@ namespace FluentAPI.GUI
             }
 
             UpdateProjectsComboBox();
+            //Tries to update the combobox in the overview usercontrol - does not work
+            //overviewUserControl.UpdateProjectsComboBox();
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
@@ -230,6 +233,8 @@ namespace FluentAPI.GUI
             }
 
             UpdateProjectsComboBox();
+            //Tries to update the combobox in the overview usercontrol - does not work
+            //overviewUserControl.UpdateProjectsComboBox();
         }
 
         private void UpdateOrSaveProject(Project project)

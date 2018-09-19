@@ -28,6 +28,7 @@
                 <DataGrid AutoGenerateColumns="False"
                           Grid.Row="1"
                           Grid.RowSpan="5"
+                          IsReadOnly="True"
                           x:Name="dataGridEmployees"
                           SelectionChanged="DataGridEmployees_SelectionChanged"
                           KeyDown="DataGrid_Employees_KeyDown">

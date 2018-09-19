@@ -31,7 +31,7 @@ namespace FluentAPI.GUI
             try
             {
                 model = new Model();
-                comboBoxProjects.ItemsSource = model.Projects.ToList();
+                UpdateProjectsComboBox();
             }
             catch (Exception)
             {
@@ -40,6 +40,11 @@ namespace FluentAPI.GUI
 
             //Shows the total cost of all projects
             textBlockExpensesAllProjects.Text = CalculateAllProjectsExpenses().ToString();
+        }
+
+        public void UpdateProjectsComboBox()
+        {
+            comboBoxProjects.ItemsSource = model.Projects.ToList();
         }
 
         private void comboBoxProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
