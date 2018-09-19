@@ -29,13 +29,13 @@ namespace FluentAPI.GUI
             InitializeComponent();
             model = new Model();
             comboBoxProjects.ItemsSource = model.Projects.ToList();
-            textBoxExpensesAllProjects.Text = CalculateAllProjectsExpenses().ToString();
+            textBlockExpensesAllProjects.Text = CalculateAllProjectsExpenses().ToString();
         }
 
         private void comboBoxProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedProject = comboBoxProjects.SelectedItem as Project;
-            textBoxExpenses.Text = CalculateProjectExpenses(selectedProject).ToString();
+            textBlockExpenses.Text = CalculateProjectExpenses(selectedProject).ToString();
         }
 
         private decimal CalculateProjectExpenses(Project selectedProject)

@@ -28,12 +28,30 @@ namespace FluentAPI.GUI
         public EmployeeUserControl()
         {
             InitializeComponent();
-            model = new Model();
+            try
+            {
+                model = new Model();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
             UpdateDataGrid();
-            //this.gridEmployee.DataContext = selectedEmployee;
             SetDataToDefault();
         }
 
+        private void UpdateDataGrid()
+        {
+
+            try
+            {
+                dataGridEmployees.ItemsSource = model.Employees.ToList();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
+        }
         private void DataGridEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedEmployee = dataGridEmployees.SelectedItem as Employee;
@@ -114,10 +132,7 @@ namespace FluentAPI.GUI
             }
         }
 
-        private void UpdateDataGrid()
-        {
-            dataGridEmployees.ItemsSource = model.Employees.ToList();
-        }
+        
 
         private void SetDataToDefault()
         {

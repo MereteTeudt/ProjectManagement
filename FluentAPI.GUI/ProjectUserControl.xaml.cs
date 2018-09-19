@@ -28,14 +28,28 @@ namespace FluentAPI.GUI
         public ProjectUserControl()
         {
             InitializeComponent();
-            model = new Model();
+            try
+            {
+                model = new Model();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
             UpdateProjectsComboBox();
             UpdateAllTeamsDataGrid();
         }
 
         private void UpdateProjectsComboBox()
         {
-            comboBoxProjects.ItemsSource = model.Projects.ToList();
+            try
+            {
+                comboBoxProjects.ItemsSource = model.Projects.ToList();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
         }
 
         private void UpdateAffiliatedTeamsDataGrid()
@@ -50,7 +64,15 @@ namespace FluentAPI.GUI
         {
             if(selectedProject != null)
             {
-                List<Team> teamsNotInProject = model.Teams.ToList();
+                List<Team> teamsNotInProject = new List<Team>();
+                try
+                {
+                    teamsNotInProject = model.Teams.ToList();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+                }
 
                 foreach (Team t in selectedProject.Teams)
                 {
@@ -61,7 +83,15 @@ namespace FluentAPI.GUI
             }
             else
             {
-                dataGridAllTeams.ItemsSource = model.Teams.ToList();
+                try
+                {
+                    dataGridAllTeams.ItemsSource = model.Teams.ToList();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+                }
+
             }
         }
 
@@ -127,7 +157,14 @@ namespace FluentAPI.GUI
                 selectedTeam = dataGridAllTeams.SelectedItem as Team;
                 selectedProject.Teams.Add(selectedTeam);
             }
-            model.SaveChanges();
+            try
+            {
+                model.SaveChanges();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
             UpdateAffiliatedTeamsDataGrid();
             UpdateAllTeamsDataGrid();
             UpdateProjectData();
@@ -140,7 +177,14 @@ namespace FluentAPI.GUI
                 selectedTeam = dataGridAllTeams.SelectedItem as Team;
                 selectedProject.Teams.Remove(selectedTeam);
             }
-            model.SaveChanges();
+            try
+            {
+                model.SaveChanges();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
             UpdateAffiliatedTeamsDataGrid();
             UpdateAllTeamsDataGrid();
             UpdateProjectData();

@@ -28,14 +28,28 @@ namespace FluentAPI.GUI
         public TeamUserControl()
         {
             InitializeComponent();
-            model = new Model();
+            try
+            {
+                model = new Model();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
             UpdateTeamsComboBox();
             UpdateAllEmployeesDateGrid();
         }
 
         private void UpdateTeamsComboBox()
         {
-            comboBoxTeams.ItemsSource = model.Teams.ToList();
+            try
+            {
+                comboBoxTeams.ItemsSource = model.Teams.ToList();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
         }
 
         /// <summary>
@@ -54,7 +68,15 @@ namespace FluentAPI.GUI
         {
             if(selectedTeam != null)
             {
-                List<Employee> employeesNotInTeam = model.Employees.ToList();
+                List<Employee> employeesNotInTeam = new List<Employee>();
+                try
+                {
+                    employeesNotInTeam = model.Employees.ToList();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+                }
 
                 foreach (Employee e in selectedTeam.Employees)
                 {
@@ -66,7 +88,14 @@ namespace FluentAPI.GUI
             }
             else
             {
-                dataGridAllEmployees.ItemsSource = model.Employees.ToList();
+                try
+                {
+                    dataGridAllEmployees.ItemsSource = model.Employees.ToList();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+                }
             }
 
         }
@@ -135,7 +164,14 @@ namespace FluentAPI.GUI
                 selectedEmployee = dataGridAllEmployees.SelectedItem as Employee;
                 selectedTeam.Employees.Add(selectedEmployee);
             }
-            model.SaveChanges();
+            try
+            {
+                model.SaveChanges();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
             UpdateMembersDataGrid();
             UpdateAllEmployeesDateGrid();
             UpdateTeamData();
@@ -148,7 +184,14 @@ namespace FluentAPI.GUI
                 selectedEmployee = dataGridMembers.SelectedItem as Employee;
                 selectedTeam.Employees.Remove(selectedEmployee);
             }
-            model.SaveChanges();
+            try
+            {
+                model.SaveChanges();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
             UpdateMembersDataGrid();
             UpdateAllEmployeesDateGrid();
             UpdateTeamData();

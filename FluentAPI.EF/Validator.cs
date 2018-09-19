@@ -28,7 +28,7 @@ namespace FluentAPI.EF
             {
 
             }
-            else if (!Regex.IsMatch(text, @"^[a-zA-Z]+$"))
+            else if(!text.All(c => Char.IsLetter(c) || Char.IsSeparator(c)))
             {
 
             }
@@ -180,7 +180,7 @@ namespace FluentAPI.EF
             {
 
             }
-            else if (!email.EndsWith(".dk") || !email.EndsWith(".com"))
+            else if (!email.EndsWith(".dk") && !email.EndsWith(".com"))
             {
 
             }

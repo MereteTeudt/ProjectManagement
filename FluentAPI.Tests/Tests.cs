@@ -24,6 +24,9 @@ namespace FluentAPI.Tests
             Project p = new Project();
             p.Name = "Something";
             p.Description = "A lot of something";
+            p.StartDate = new DateTime(1990, 10, 10);
+            p.EndDate = new DateTime(2000, 10, 10);
+            p.Budget = 100.00m;
             model.Projects.Add(p);
             int count = model.Projects.ToList().Count;
             model.SaveChanges();
@@ -35,19 +38,21 @@ namespace FluentAPI.Tests
         public void UpdateProject()
         {
             Model model = new Model();
-            Project project = model.Projects.Find(1);
+            Project project = model.Projects.Where(p => p.Name == "Something").FirstOrDefault();
             string oldDescription = project.Description;
             project.Description = ((new Random()).Next(0,Int32.MaxValue)).ToString();
             model.SaveChanges();
-            var newP = model.Projects.Find(1);
-            Assert.AreNotEqual(oldDescription, newP.Description);
+            Assert.AreNotEqual(oldDescription, project.Description);
         }
 
         [TestMethod]
         public void CreateUnaffiliatedTeam()
         {
             Team t = new Team();
-            t.Name = "Awesome Team";
+            t.Name = "Indigo";
+            t.Description = "I am fancy, but Im still blue";
+            t.StartDate = new DateTime(2017, 12, 12);
+            t.EndDate = new DateTime(2018, 12, 12);
             Model model = new Model();
             model.Teams.Add(t);
             model.SaveChanges();
@@ -57,9 +62,18 @@ namespace FluentAPI.Tests
         public void CreateAffiliatedTeam()
         {
             Team t = new Team();
-            t.Name = "A Team";
+            t.Name = "Orange";
+            t.Description = "I am not a fruit";
+            t.StartDate = new DateTime(2016, 12, 12);
+            t.EndDate = new DateTime(2017, 12, 12);
+
             Project p = new Project();
-            p.Name = "The A Team Project";
+            p.Name = "Tango";
+            p.Description = "I am not a dance";
+            p.StartDate = new DateTime(1990, 10, 10);
+            p.EndDate = new DateTime(2000, 10, 10);
+            p.Budget = 100.00m;
+
             List<Team> demTeams = new List<Team>();
             demTeams.Add(t);
             p.Teams = demTeams;
@@ -67,12 +81,15 @@ namespace FluentAPI.Tests
             model.Projects.Add(p);
             model.SaveChanges();
 
-            Team team = model.Teams.Where(someteam => someteam.Name == "A Team").FirstOrDefault();
+            Team team = model.Teams.Where(someteam => someteam.Name == "Orange").FirstOrDefault();
             Project affiliatedProject = team.Project;
             bool projectHasTeam = team.Name == t.Name && affiliatedProject.Name == p.Name;
 
             Assert.IsTrue(projectHasTeam);
         }
+        /// <summary>
+        /// Verify that contactinfo cannot be created without an employee because contactinfo Id is a foreign key to an employee
+        /// </summary>
         [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
         [TestMethod]
         public void InvalidOperationException()
@@ -88,12 +105,11 @@ namespace FluentAPI.Tests
         [TestMethod]
         public void CreateEmployeeWithoutContactInfo()
         {
-            Employee employee = new Employee();
-            employee.Name = "TestName";
+            Employee employee = new Employee("Test", "Name", "2222222222", new DateTime(1980, 01, 01), new DateTime(2010, 01, 01), 30000.00m);
             Model model = new Model();
             model.Employees.Add(employee);
             model.SaveChanges();
-            Employee savedEmployee = model.Employees.Where(someEmployee => someEmployee.Name == "TestName").FirstOrDefault();
+            Employee savedEmployee = model.Employees.Where(someEmployee => someEmployee.FirstName == "Test").FirstOrDefault();
             Assert.IsNotNull(savedEmployee);
         }
 
@@ -101,15 +117,14 @@ namespace FluentAPI.Tests
         public void CreateEmployeeWithContactInfo()
         {
             ContactInfo contactInfo = new ContactInfo();
-            contactInfo.Email = "mara@aspit.dk";
+            contactInfo.Email = "test@test.dk";
             contactInfo.Phone = "12345678";
-            Employee employee = new Employee();
-            employee.Name = "TestName";
+            Employee employee = new Employee("Test", "Name", "2222222222", new DateTime(1980, 01, 01), new DateTime(2010, 01, 01), 30000.00m);
             employee.ContactInfo = contactInfo;
             Model model = new Model();
             model.Employees.Add(employee);
             model.SaveChanges();
-            Employee savedEmployee = model.Employees.Where(someEmployee => someEmployee.Name == "TestName").FirstOrDefault();
+            Employee savedEmployee = model.Employees.Where(someEmployee => someEmployee.FirstName == "Test").FirstOrDefault();
             Assert.IsNotNull(savedEmployee);
         }
     }
