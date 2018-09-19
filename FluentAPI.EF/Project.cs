@@ -133,7 +133,7 @@ namespace FluentAPI.EF
             decimal amount = 0;
             foreach(Team t in Teams)
             {
-                amount = t.Calculate();
+                amount += t.Calculate();
             }
             return amount;
         }

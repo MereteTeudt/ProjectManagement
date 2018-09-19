@@ -27,6 +27,7 @@ namespace FluentAPI.GUI
         public OverviewUserControl()
         {
             InitializeComponent();
+
             try
             {
                 model = new Model();
@@ -36,6 +37,7 @@ namespace FluentAPI.GUI
             {
                 MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
             }
+
             //Shows the total cost of all projects
             textBlockExpensesAllProjects.Text = CalculateAllProjectsExpenses().ToString();
         }
@@ -57,6 +59,7 @@ namespace FluentAPI.GUI
         {
             decimal totalPayExpense = 0;
             int durationInMonths = 0;
+
             durationInMonths = selectedProject.Duration.Days / 30;
             totalPayExpense = durationInMonths * selectedProject.Calculate();
 

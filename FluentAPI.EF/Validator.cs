@@ -152,7 +152,7 @@ namespace FluentAPI.EF
         {
             bool valid = false;
 
-            if (cpr.Length != 10)
+            if (cpr.Length > 11 || cpr.Length < 10)
             {
 
             }

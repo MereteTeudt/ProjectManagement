@@ -105,13 +105,15 @@ namespace FluentAPI.GUI
             if (comboBoxTeams.SelectedItem != null)
             {
                 selectedTeam = comboBoxTeams.SelectedItem as Team;
-                textBoxTeamDescription.Text = selectedTeam?.Description;
-                datePickerStartDate.SelectedDate = selectedTeam?.StartDate;
-                datePickerEndDate.SelectedDate = selectedTeam?.EndDate;
+                textBoxTeamName.Text = selectedTeam.Name;
+                textBoxTeamDescription.Text = selectedTeam.Description;
+                datePickerStartDate.SelectedDate = selectedTeam.StartDate;
+                datePickerEndDate.SelectedDate = selectedTeam.EndDate;
                 textBoxExpenses.Text = CalculateTeamExpenses(selectedTeam).ToString();
             }
             else
             {
+                textBoxTeamName.Text = "";
                 textBoxTeamDescription.Text = "";
                 datePickerStartDate.SelectedDate = DateTime.Now;
                 datePickerEndDate.SelectedDate = DateTime.Now.AddDays(7);
@@ -288,6 +290,7 @@ namespace FluentAPI.GUI
         {
             decimal totalPayExpense = 0;
             int durationInMonths = 0;
+
             durationInMonths = selectedTeam.Duration.Days / 30;
             totalPayExpense = durationInMonths * selectedTeam.Calculate();
 

@@ -36,6 +36,7 @@ namespace FluentAPI.GUI
             {
                 MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
             }
+
             UpdateProjectsComboBox();
             UpdateAllTeamsDataGrid();
         }
@@ -57,6 +58,7 @@ namespace FluentAPI.GUI
             selectedProject = comboBoxProjects.SelectedItem as Project;
             dataGridAffiliatedTeams.ItemsSource = selectedProject.Teams.ToList();
         }
+
         /// <summary>
         /// Updates the datagrid so it only contains teams who are not already in the selected project
         /// </summary>
@@ -91,7 +93,6 @@ namespace FluentAPI.GUI
                 {
                     MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
                 }
-
             }
         }
 
@@ -100,13 +101,15 @@ namespace FluentAPI.GUI
             if (comboBoxProjects.SelectedItem != null)
             {
                 selectedProject = comboBoxProjects.SelectedItem as Project;
-                textBoxProjectDescription.Text = selectedProject?.Description;
+                textBoxProjectName.Text = selectedProject.Name;
+                textBoxProjectDescription.Text = selectedProject.Description;
                 datePickerStartDate.SelectedDate = selectedProject.StartDate;
                 datePickerEndDate.SelectedDate = selectedProject.EndDate;
                 textBoxBudget.Text = selectedProject.Budget.ToString();
             }
             else
             {
+                textBoxProjectName.Text = "";
                 textBoxProjectDescription.Text = "";
                 datePickerStartDate.SelectedDate = DateTime.Now;
                 datePickerEndDate.SelectedDate = DateTime.Now.AddDays(7);
@@ -157,6 +160,7 @@ namespace FluentAPI.GUI
                 selectedTeam = dataGridAllTeams.SelectedItem as Team;
                 selectedProject.Teams.Add(selectedTeam);
             }
+
             try
             {
                 model.SaveChanges();
@@ -165,6 +169,7 @@ namespace FluentAPI.GUI
             {
                 MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
             }
+
             UpdateAffiliatedTeamsDataGrid();
             UpdateAllTeamsDataGrid();
             UpdateProjectData();
@@ -174,9 +179,10 @@ namespace FluentAPI.GUI
         {
             if (comboBoxProjects.SelectedIndex > -1)
             {
-                selectedTeam = dataGridAllTeams.SelectedItem as Team;
+                selectedTeam = dataGridAffiliatedTeams.SelectedItem as Team;
                 selectedProject.Teams.Remove(selectedTeam);
             }
+
             try
             {
                 model.SaveChanges();
@@ -185,6 +191,7 @@ namespace FluentAPI.GUI
             {
                 MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
             }
+
             UpdateAffiliatedTeamsDataGrid();
             UpdateAllTeamsDataGrid();
             UpdateProjectData();
@@ -193,8 +200,8 @@ namespace FluentAPI.GUI
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
             selectedProject = comboBoxProjects.SelectedItem as Project;
-
             UpdateOrSaveProject(selectedProject);
+
             try
             {
                 model.SaveChanges();
@@ -210,7 +217,6 @@ namespace FluentAPI.GUI
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
             Project project = new Project();
-
             UpdateOrSaveProject(project);
 
             try

@@ -88,6 +88,7 @@
                     Content="Tilføj"
                     Grid.Column="0"
                     Grid.Row="6"
+                    Margin="5"
                     Click="buttonAdd_Click">
             </Button>
             <Button x:Name="buttonRemove"
@@ -95,6 +96,7 @@
                     Content="Fjern"
                     Grid.Column="1"
                     Grid.Row="6"
+                    Margin="5"
                     Click="buttonRemove_Click">
             </Button>
             <Label Content="Hold Navn:"
@@ -142,6 +144,7 @@
                     Content="Opdater"
                     Grid.Column="4"
                     Grid.Row="6"
+                    Margin="5"
                     Click="buttonUpdate_Click">
             </Button>
             <Button x:Name="buttonSave"
@@ -149,6 +152,7 @@
                     Content="Gem"
                     Grid.Column="5"
                     Grid.Row="6"
+                    Margin="5"
                     Click="buttonSave_Click">
             </Button>
         </Grid>

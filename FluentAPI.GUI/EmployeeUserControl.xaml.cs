@@ -25,9 +25,11 @@ namespace FluentAPI.GUI
         private Employee selectedEmployee;
         private TeamUserControl teamUserControl = new TeamUserControl();
         private ProjectUserControl projectUserControl = new ProjectUserControl();
+
         public EmployeeUserControl()
         {
             InitializeComponent();
+
             try
             {
                 model = new Model();
@@ -36,6 +38,7 @@ namespace FluentAPI.GUI
             {
                 MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
             }
+
             UpdateDataGrid();
             SetDataToDefault();
         }
@@ -55,6 +58,7 @@ namespace FluentAPI.GUI
         private void DataGridEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedEmployee = dataGridEmployees.SelectedItem as Employee;
+
             if (selectedEmployee != null)
             {
                 buttonUpdateEmployee.IsEnabled = true;
@@ -63,7 +67,7 @@ namespace FluentAPI.GUI
                 textBoxEmployeeFirstName.Text = selectedEmployee.FirstName;
                 textBoxEmployeeLastName.Text = selectedEmployee.LastName;
                 datePickerBirthDate.SelectedDate = selectedEmployee.BirthDate;
-                textBoxEmployeeCPR.Text = "" + selectedEmployee.CPR;
+                textBoxEmployeeCPR.Text = selectedEmployee.BirthDate.ToString("dd") + selectedEmployee.BirthDate.ToString("MM") + selectedEmployee.BirthDate.ToString("yy") + "-" + selectedEmployee.CPR.Substring(selectedEmployee.CPR.Length - 4);
                 datePickerHiringDate.SelectedDate = selectedEmployee.HiringDate;
                 textBoxEmployeeSalary.Text = "" + selectedEmployee.Salary;
 
@@ -93,7 +97,6 @@ namespace FluentAPI.GUI
         private void ButtonSaveEmployee_Click(object sender, RoutedEventArgs e)
         {
             Employee employee = new Employee();
-            employee.ContactInfo = new ContactInfo();
             UpdateOrSaveEmployee(employee);
 
             try
@@ -113,11 +116,6 @@ namespace FluentAPI.GUI
         private void ButtonUpdateEmployee_Click(object sender, RoutedEventArgs e)
         {
 
-            if (selectedEmployee.ContactInfo == null)
-            {
-                ContactInfo contactInfo = new ContactInfo();
-                selectedEmployee.ContactInfo = contactInfo;
-            }
             UpdateOrSaveEmployee(selectedEmployee);
 
             try
@@ -125,9 +123,9 @@ namespace FluentAPI.GUI
                 model.SaveChanges();
                 UpdateDataGrid();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+                MessageBox.Show(/*"Der skete en uventet fejl. Venligst prøv igen"*/ ex.Message);
             }
         }
 
@@ -136,7 +134,7 @@ namespace FluentAPI.GUI
 
             textBoxEmployeeFirstName.Text = "";
             textBoxEmployeeLastName.Text = "";
-            textBoxEmployeeCPR.Text = "1111111111";
+            textBoxEmployeeCPR.Text = "";
             textBoxEmployeeSalary.Text = "0.0";
             textBoxEmail.Text = "";
             textBoxPhone.Text = "000000";
@@ -148,6 +146,33 @@ namespace FluentAPI.GUI
         private void UpdateOrSaveEmployee(Employee employee)
         {
             decimal parsedSalary;
+
+            if (!string.IsNullOrEmpty(textBoxEmail.Text) || !string.IsNullOrEmpty(textBoxPhone.Text))
+            {
+                employee.ContactInfo = new ContactInfo();
+
+                if (!Validator.IsValidEmail(textBoxEmail.Text))
+                {
+                    MessageBox.Show("Ugyldig email adresse. Email adresser skal indeholde @ og ende på.com eller.dk");
+                }
+                else if (!Validator.IsvalidPhone(textBoxPhone.Text))
+                {
+                    MessageBox.Show("Ugyldigt telefon nummer. Telefon numre kan kun bestå af tal og må ikke være længere end 25 tegn");
+                }
+                else
+                {
+                    try
+                    {
+                        employee.ContactInfo.Email = textBoxEmail.Text;
+
+                        employee.ContactInfo.Phone = textBoxPhone.Text;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+                    }
+                }
+            }
 
             if (!Validator.IsValidName(textBoxEmployeeFirstName.Text))
             {
@@ -167,7 +192,7 @@ namespace FluentAPI.GUI
             }
             else if (!Validator.IsValidCPR(textBoxEmployeeCPR.Text))
             {
-                MessageBox.Show("Ugyldigt CPR nummer. Et CPR nummer skal være præcis 8 cifre langt.");
+                MessageBox.Show("Ugyldigt CPR nummer. Et CPR nummer skal indeholde præcis 11 tegn inklusiv bindestreg.");
             }
             else if (!decimal.TryParse(textBoxEmployeeSalary.Text, out parsedSalary))
             {
@@ -187,15 +212,14 @@ namespace FluentAPI.GUI
 
                     employee.BirthDate = datePickerBirthDate.SelectedDate.Value;
 
-                    employee.CPR = textBoxEmployeeCPR.Text;
+                    employee.CPR = 
+                        selectedEmployee.BirthDate.ToString("dd") + selectedEmployee.BirthDate.ToString("MM") + selectedEmployee.BirthDate.ToString("yy") 
+                        + selectedEmployee.CPR.Substring(selectedEmployee.CPR.Length - 4);
 
                     employee.HiringDate = datePickerHiringDate.SelectedDate.Value;
 
                     employee.Salary = parsedSalary;
-                
-                    employee.ContactInfo.Email = textBoxEmail.Text;
 
-                    employee.ContactInfo.Phone = textBoxPhone.Text;
                 }
                 catch (Exception)
                 {

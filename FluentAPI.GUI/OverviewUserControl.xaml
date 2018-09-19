@@ -25,29 +25,41 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="comboBoxProjects"
-                              Grid.Column="1"
-                              Grid.Row="1"
-                              DisplayMemberPath="{Binding Name}"
-                              SelectionChanged="comboBoxProjects_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <TextBlock x:Name="textBlockExpenses"
-                               TextAlignment="Right"
-                                Grid.Column="2"
-                                Grid.Row="1">
-                    </TextBlock>
-                    <Label Content="Udgifter for alle projekter:"
-                           Grid.Column="1"
-                           Grid.Row="2" />
+                    <Border BorderThickness="1"
+                            BorderBrush="Black"
+                            Grid.Column="1"
+                            Grid.Row="1">
+                        <ComboBox x:Name="comboBoxProjects"
+                                  DisplayMemberPath="{Binding Name}"
+                                  SelectionChanged="comboBoxProjects_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Border>
+                    <Border BorderThickness="1"
+                            BorderBrush="Black"
+                            Grid.Column="2"
+                            Grid.Row="1">
+                        <TextBlock x:Name="textBlockExpenses"
+                                   TextAlignment="Right">
+                        </TextBlock>
+                    </Border>
+                    <Border BorderThickness="1"
+                            BorderBrush="Black"
+                            Grid.Column="1"
+                            Grid.Row="2">
+                        <Label Content="Udgifter for alle projekter:" />
+                    </Border>
+                    <Border BorderThickness="1"
+                            BorderBrush="Black"
+                            Grid.Column="2"
+                            Grid.Row="2">
                     <TextBlock x:Name="textBlockExpensesAllProjects"
-                               TextAlignment="Right"
-                               Grid.Column="2"
-                               Grid.Row="2" />
+                               TextAlignment="Right"/>
+                    </Border>
                 </Grid>
             </Grid>
         </Grid>

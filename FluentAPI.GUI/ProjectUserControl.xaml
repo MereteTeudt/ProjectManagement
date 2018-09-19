@@ -58,11 +58,9 @@
                     <DataGridTextColumn Header="Beskrivelse"
                                         Binding="{Binding Description}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Start"
-                                        Binding="{Binding StartDate}"></DataGridTextColumn>
+                                        Binding="{Binding StartDate, StringFormat=dd/MM/yyyy}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Slut"
-                                        Binding="{Binding EndDate}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Budget"
-                                        Binding="{Binding EndDate}"></DataGridTextColumn>
+                                        Binding="{Binding EndDate, StringFormat=dd/MM/yyyy}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Label Content="Alle hold:"
@@ -81,11 +79,9 @@
                     <DataGridTextColumn Header="Beskrivelse"
                                         Binding="{Binding Description}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Start"
-                                        Binding="{Binding StartDate}"></DataGridTextColumn>
+                                        Binding="{Binding StartDate, StringFormat=dd/MM/yyyy}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Slut"
-                                        Binding="{Binding EndDate}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Budget"
-                                        Binding="{Binding Budget}"></DataGridTextColumn>
+                                        Binding="{Binding EndDate, StringFormat=dd/MM/yyyy}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="buttonAdd"
@@ -93,6 +89,7 @@
                     Content="Tilføj"
                     Grid.Column="0"
                     Grid.Row="6"
+                    Margin="5"
                     Click="buttonAdd_Click">
             </Button>
             <Button x:Name="buttonRemove"
@@ -100,6 +97,7 @@
                     Content="Fjern"
                     Grid.Column="1"
                     Grid.Row="6"
+                    Margin="5"
                     Click="buttonRemove_Click">
             </Button>
             <Label Content="Projekt Navn:"
@@ -147,6 +145,7 @@
                     Content="Opdater"
                     Grid.Column="4"
                     Grid.Row="6"
+                    Margin="5"
                     Click="buttonUpdate_Click">
             </Button>
             <Button x:Name="buttonSave"
@@ -154,6 +153,7 @@
                     Content="Gem"
                     Grid.Column="5"
                     Grid.Row="6"
+                    Margin="5"
                     Click="buttonSave_Click">
             </Button>
         </Grid>

@@ -89,7 +89,7 @@ namespace FluentAPI.EF
                 if (!Validator.IsValidCPR(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value),
-                        value, $"{nameof(CPR)} Ugyldigt CPR nummer. Et CPR nummer kan kun bestå af tal.");
+                        value, $"{nameof(CPR)} Ugyldigt CPR nummer. Et CPR nummer skal indeholde præcis 11 tegn inklusiv bindestreg.");
                 }
                 cpr = value;
             }
