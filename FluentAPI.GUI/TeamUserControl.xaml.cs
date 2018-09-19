@@ -278,11 +278,17 @@ namespace FluentAPI.GUI
             buttonSave.IsEnabled = true;
             buttonUpdate.IsEnabled = false;
         }
+
+        /// <summary>
+        /// Calculates and return the total expense for the team
+        /// </summary>
+        /// <param name="selectedTeam"></param>
+        /// <returns></returns>
         public static decimal CalculateTeamExpenses(Team selectedTeam)
         {
             decimal totalPayExpense = 0;
             int durationInMonths = 0;
-            durationInMonths = selectedTeam.TeamDuration.Days / 30;
+            durationInMonths = selectedTeam.Duration.Days / 30;
             totalPayExpense = durationInMonths * selectedTeam.Calculate();
 
             return totalPayExpense;

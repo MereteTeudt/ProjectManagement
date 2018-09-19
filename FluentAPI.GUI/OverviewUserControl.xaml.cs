@@ -27,33 +27,60 @@ namespace FluentAPI.GUI
         public OverviewUserControl()
         {
             InitializeComponent();
-            model = new Model();
-            comboBoxProjects.ItemsSource = model.Projects.ToList();
+            try
+            {
+                model = new Model();
+                comboBoxProjects.ItemsSource = model.Projects.ToList();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
+            }
+            //Shows the total cost of all projects
             textBlockExpensesAllProjects.Text = CalculateAllProjectsExpenses().ToString();
         }
 
         private void comboBoxProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedProject = comboBoxProjects.SelectedItem as Project;
+
+            //Shows the cost for the selected project
             textBlockExpenses.Text = CalculateProjectExpenses(selectedProject).ToString();
         }
 
+        /// <summary>
+        /// Calculates and returns the total expense for the project
+        /// </summary>
+        /// <param name="selectedProject"></param>
+        /// <returns></returns>
         private decimal CalculateProjectExpenses(Project selectedProject)
         {
             decimal totalPayExpense = 0;
             int durationInMonths = 0;
-            durationInMonths = selectedProject.ProjectDuration.Days / 30;
+            durationInMonths = selectedProject.Duration.Days / 30;
             totalPayExpense = durationInMonths * selectedProject.Calculate();
 
             return totalPayExpense;
         }
+
+        /// <summary>
+        /// Calculates and returns the total expense for all projects in model.Projects
+        /// </summary>
+        /// <returns></returns>
         private decimal CalculateAllProjectsExpenses()
         {
             decimal allProjectsExpenses = 0;
 
-            foreach (Project p in model.Projects.ToList())
+            try
             {
-                allProjectsExpenses += CalculateProjectExpenses(p);
+                foreach (Project p in model.Projects.ToList())
+                {
+                    allProjectsExpenses += CalculateProjectExpenses(p);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
             }
 
             return allProjectsExpenses;

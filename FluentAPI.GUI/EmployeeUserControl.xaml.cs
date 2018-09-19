@@ -42,7 +42,6 @@ namespace FluentAPI.GUI
 
         private void UpdateDataGrid()
         {
-
             try
             {
                 dataGridEmployees.ItemsSource = model.Employees.ToList();
@@ -52,6 +51,7 @@ namespace FluentAPI.GUI
                 MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
             }
         }
+
         private void DataGridEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedEmployee = dataGridEmployees.SelectedItem as Employee;
@@ -60,21 +60,22 @@ namespace FluentAPI.GUI
                 buttonUpdateEmployee.IsEnabled = true;
                 buttonSaveEmployee.IsEnabled = false;
 
-                textBoxEmployeeFirstName.Text = selectedEmployee?.FirstName;
-                textBoxEmployeeLastName.Text = selectedEmployee?.LastName;
-                datePickerBirthDate.SelectedDate = selectedEmployee?.BirthDate;
-                textBoxEmployeeCPR.Text = "" + selectedEmployee?.CPR;
-                datePickerHiringDate.SelectedDate = selectedEmployee?.HiringDate;
-                textBoxEmployeeSalary.Text = "" + selectedEmployee?.Salary;
+                textBoxEmployeeFirstName.Text = selectedEmployee.FirstName;
+                textBoxEmployeeLastName.Text = selectedEmployee.LastName;
+                datePickerBirthDate.SelectedDate = selectedEmployee.BirthDate;
+                textBoxEmployeeCPR.Text = "" + selectedEmployee.CPR;
+                datePickerHiringDate.SelectedDate = selectedEmployee.HiringDate;
+                textBoxEmployeeSalary.Text = "" + selectedEmployee.Salary;
 
-                textBoxEmail.Text = selectedEmployee?.ContactInfo?.Email;
-                textBoxPhone.Text = selectedEmployee?.ContactInfo?.Phone;
+                textBoxEmail.Text = selectedEmployee.ContactInfo?.Email;
+                textBoxPhone.Text = selectedEmployee.ContactInfo?.Phone;
             }
             else
             {
                 SetDataToDefault();
             }
         }
+
         private void DataGrid_Employees_KeyDown(object sender, KeyEventArgs e)
         {
             if (dataGridEmployees.SelectedItem != null)
@@ -102,13 +103,11 @@ namespace FluentAPI.GUI
                 UpdateDataGrid();
                 teamUserControl.UpdateAllEmployeesDateGrid();
                 projectUserControl.UpdateAllTeamsDataGrid();
-
             }
             catch (Exception)
             {
                 MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
             }
-
         }
 
         private void ButtonUpdateEmployee_Click(object sender, RoutedEventArgs e)
@@ -131,8 +130,6 @@ namespace FluentAPI.GUI
                 MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
             }
         }
-
-        
 
         private void SetDataToDefault()
         {
@@ -205,7 +202,6 @@ namespace FluentAPI.GUI
                     MessageBox.Show("Der skete en uventet fejl. Venligst prøv igen");
                 }
             }
-
         }
     }
 }

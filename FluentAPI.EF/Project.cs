@@ -7,6 +7,9 @@ namespace FluentAPI.EF
     using System.Data.Entity.Spatial;
     using System.Text.RegularExpressions;
 
+    /// <summary>
+    /// Represents a collection of one or more teams, implements the IWorkable interface
+    /// </summary>
     public partial class Project : IWorkable
     {
         private string name;
@@ -121,6 +124,10 @@ namespace FluentAPI.EF
                 return EndDate - StartDate;
             }
         }
+
+        /// <summary>
+        /// Calculates and returns the sum of the salary expense for all teams in the project per month
+        /// </summary>
         public decimal Calculate()
         {
             decimal amount = 0;

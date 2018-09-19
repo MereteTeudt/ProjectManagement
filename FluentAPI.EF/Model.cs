@@ -20,7 +20,7 @@ namespace FluentAPI.EF
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>()
-                .Property(e => e.Pay)
+                .Property(e => e.Salary)
                 .HasPrecision(19, 4);
 
             modelBuilder.Entity<Employee>()

@@ -6,6 +6,9 @@ namespace FluentAPI.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    /// <summary>
+    /// Represents a team of employees, implements the IWorkable interface
+    /// </summary>
     public partial class Team : IWorkable
     {
         private string name;
@@ -102,6 +105,10 @@ namespace FluentAPI.EF
             }
         }
 
+        /// <summary>
+        /// Calculates and returns the sum of the salary for all employees in the team per month
+        /// </summary>
+        /// <returns></returns>
         public decimal Calculate()
         {
             decimal amount = 0;
